@@ -1,0 +1,20 @@
+.bg-img {
+    background-size: cover !important;
+    background-image: url("https://images.unsplash.com/photo-1530669244764-0909211cd8e8?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=687&q=80");
+}
+
+.primary {
+    background-color: #ff5200!important;
+}
+
+.primary:hover {
+    background-color: #FF7433 !important;
+}
+
+.primary-link {
+    color: #ff5200!important;
+}
+
+.primary-link:hover {
+    color: #FF7433 !important;
+}
