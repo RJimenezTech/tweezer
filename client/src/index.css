@@ -18,3 +18,15 @@
 .primary-link:hover {
     color: #FF7433 !important;
 }
+
+.option:hover {
+    color: #FF7433 !important;
+    cursor: pointer;
+    transition: 0.15s;
+    transition-timing-function: ease-in-out;
+}
+
+.logo {
+    width: 5rem;
+    height: auto;
+}
