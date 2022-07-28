@@ -1,11 +1,11 @@
 import Home from "./pages/Home"
+import Signup from "./pages/Signup";
 
 
 function App() {
   return (
     <div className="App">
       <header className="App-header">
-        <Home></Home>
       </header>
     </div>
   );
