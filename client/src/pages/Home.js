@@ -7,7 +7,7 @@ function Home() {
         <div className="col-8">
           <div className="h-100 d-flex flex-column align-items-center justify-content-center">
             <h1 className="fw-bold">Talk with Tweezer, sign up today.</h1>
-            <button className="my-4 btn text-light fw-bold primary btn-lg">
+            <button className="rounded-pill my-4 btn text-light fw-bold primary btn-lg">
               <a href="/signup" className="text-decoration-none text-light">
                 Sign up
               </a>

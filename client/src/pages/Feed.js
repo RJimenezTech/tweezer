@@ -5,8 +5,8 @@ import tweezer from "../assets/images/tweezer.svg"
 function Feed() {
     return (
       <div className="row min-vh-100">
-        <div className="col-3 text-dark">
-          <div className="container d-flex flex-column justify-content-center fs-3">
+        <div className="col-4 d-flex justify-content-end text-dark">
+          <div className="fs-3">
             <img src={tweezer} alt="tweezer logo" className="logo my-3"/>
             <div className="option d-flex flex-row my-2">
               <i className="bi bi-house mx-2"></i>
@@ -40,13 +40,13 @@ function Feed() {
               <i className="bi bi-gear mx-2"></i>
               <p className="my-auto w-100 mx-3">More</p>
             </div>
-            <button className="my-4 fw-bold btn text-light fw-bold primary btn-lg">
+            <button className="my-4 w-100 rounded-pill btn text-light fw-bold primary btn-lg">
               Tweet
             </button>
           </div>
         </div>
-        <div className="col-6 border"></div>
-        <div className="col-3"></div>
+        <div className="col-4 border"></div>
+        <div className="col-4"></div>
       </div>
     );
 };
