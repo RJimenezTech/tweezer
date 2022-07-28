@@ -2,7 +2,7 @@ import React from "react";
 
 function Home() {
     return (
-      <div className="row min-vh-100 bg-light">
+      <div className="row w-100 min-vh-100 bg-light">
         <div className="col-4 bg-img"></div>
         <div className="col-8">
           <div className="h-100 d-flex flex-column align-items-center justify-content-center">
