@@ -1,3 +1,5 @@
+import React from "react";
+
 function Login() {
   return (
     <div className="row min-vh-100 bg-light">
@@ -21,7 +23,8 @@ function Login() {
             />
             <button
               className="my-4 btn text-light fw-bold primary btn-lg"
-              type="submit">
+              type="submit"
+            >
               Lets go!
             </button>
           </form>

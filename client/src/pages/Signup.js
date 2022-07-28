@@ -1,3 +1,5 @@
+import React from "react";
+
 function Signup() {
   return (
     <div className="row min-vh-100 bg-light">
@@ -28,7 +30,8 @@ function Signup() {
             />
             <button
               className="my-4 btn text-light fw-bold primary btn-lg"
-              type="submit">
+              type="submit"
+            >
               Lets go!
             </button>
           </form>
