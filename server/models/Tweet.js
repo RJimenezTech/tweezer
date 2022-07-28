@@ -1,15 +1,19 @@
 const { Schema, model } = require('mongoose');
-const reactionSchema = require('./Reaction');
 const dateFormat = require('../utils/dateFormat');
 
-const thoughtSchema = new Schema(
+const tweetSchema = new Schema(
   {
-    thoughtText: {
+    text: {
       type: String,
       required: 'You need to leave a thought!',
       minlength: 1,
       maxlength: 280
     },
+    // media: {
+    //   type: String, 
+    //   filesize?
+    //   extension requirements?
+    // },
     createdAt: {
       type: Date,
       default: Date.now,
@@ -17,9 +21,39 @@ const thoughtSchema = new Schema(
     },
     username: {
       type: String,
-      required: true
+      required: true,
+      unique: true
     },
-    reactions: [reactionSchema]
+    replies: [
+      {
+        type: Schema.Types.ObjectId,
+        ref: 'Tweet'
+      }
+    ],
+    likes: [
+        {
+          type: Schema.Types.ObjectId,
+          ref: 'User'
+        }
+    ],
+    retweets: [
+        {
+          type: Schema.Types.ObjectId,
+          ref: 'User'
+        }
+    ],
+    isRetweet: {
+        type: Boolean, 
+    }, 
+    isReply: {
+        type: Boolean,
+    }, 
+    mentions: [
+        {
+            type: Schema.Types.ObjectId,
+            ref: 'User'
+        }
+    ]
   },
   {
     toJSON: {
@@ -28,10 +62,18 @@ const thoughtSchema = new Schema(
   }
 );
 
-thoughtSchema.virtual('reactionCount').get(function() {
-  return this.reactions.length;
+tweetSchema.virtual('replyCount').get(function() {
+    return this.replies.length;
 });
 
-const Thought = model('Thought', thoughtSchema);
+tweetSchema.virtual('likesCount').get(function() {
+    return this.likes.length;
+});
 
-module.exports = Thought;
+tweetSchema.virtual('retweetCount').get(function() {
+  return this.retweets.length;
+});
+
+const Tweet = model('Tweet', tweetSchema);
+
+module.exports = Tweet;
