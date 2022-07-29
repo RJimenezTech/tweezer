@@ -43,31 +43,32 @@ const resolvers = {
     },
   },
   Mutation: {
-    login: async (parent, {email, password}) => {
-      const user = await User.findOne({email});
+    addUser: async (parents, args) => {
+      const user = await User.create(args);
+      const token = signToken(user);
+
+      return { token, user };
+    },
+    login: async (parent, { email, password }) => {
+      const user = await User.findOne({ email });
       if (!user) {
         throw new AuthenticationError("Incorrect email/password");
       }
       const correctPw = await user.isCorrectPassword(password);
       if (!correctPw) {
-        throw new AuthenticaitionError("Incorrect email/password")
+        throw new AuthenticaitionError("Incorrect email/password");
       }
 
       const token = signToken(user);
-      return {token, user};
+      return { token, user };
     },
-    addUser: async (parents, args) => {
-      const user = await User.create(args);
-      return user;
-    },    
     // need context as parameter to find the currently logged in user
     addTweet: async (parent, args) => {
       // args come from the typeDefs
-      const {userId, text} = args;
-      const user = await User.findById(
-        {
-        _id: userId
-        });
+      const { userId, text } = args;
+      const user = await User.findById({
+        _id: userId,
+      });
 
       if (user) {
         const tweet = await Tweet.create({
@@ -80,13 +81,28 @@ const resolvers = {
           { $push: { tweets: tweet._id } },
           { new: true }
         );
-          
+
         return tweet;
       }
 
       throw new AuthenticationError("You need to be logged in!");
     },
-    //login
+    login: async (parent, { email, password }) => {
+      const user = await User.findOne({ email });
+
+      if (!user) {
+        throw new AuthenticationError("Incorrect credentials");
+      }
+
+      const correctPw = await user.isCorrectPassword(password);
+
+      if (!correctPw) {
+        throw new AuthenticationError("Incorrect credentials");
+      }
+
+      const token = signToken(user);
+      return { token, user };
+    },
     //updateUser
     //deleteTweet
     //addFollower
