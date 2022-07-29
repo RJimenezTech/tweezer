@@ -50,4 +50,7 @@
 
 .border {
     padding: 0 !important;
+    resize: none !important;
+    outline: 0px none !important;
+    
 }

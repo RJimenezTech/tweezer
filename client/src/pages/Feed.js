@@ -1,12 +1,12 @@
 import React from "react";
 
-// import HomeTweet from "../components/HomeTweet"
+import HomeTweet from "../components/HomeTweet"
 
 import tweezer from "../assets/images/tweezer.svg"
 
 function Feed() {
     return (
-      <div className="row bg-light min-vh-100">
+      <div className="row bg-light w-100 min-vh-100">
         <div className="col-4 d-flex justify-content-end text-dark">
           <div className="fs-3">
             <img src={tweezer} alt="tweezer logo" className="logo my-3"/>
@@ -51,6 +51,7 @@ function Feed() {
           <header className="text-dark fs-5 fw-bold bg-light home-header">
             <p className="p-3 header-text">Home</p>
           </header>
+          <HomeTweet></HomeTweet>
         </div>
         <div className="col-4"></div>
       </div>
