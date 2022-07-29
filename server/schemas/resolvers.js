@@ -20,94 +20,86 @@ const resolvers = {
       return User.find()
         .select("-__v -password")
         .populate("tweets")
-        .populate("followers");
+        .populate("followers")
+        .populate("following")
+        .populate("likes")
+        .populate("notifications");
     },
-    // user: async (parent, { username }) => {
-    //   return User.findOne({ username })
-    //     .select("-__v -password")
-    //     .populate("friends")
-    //     .populate("thoughts");
-    // },
-    // thoughts: async (parent, { username }) => {
-    //   const params = username ? { username } : {};
-    //   return Thought.find(params).sort({ createdAt: -1 });
-    // },
-    // thought: async (parent, { _id }) => {
-    //   return Thought.findOne({ _id });
-    // },
+    user: async (parent, { username }) => {
+      return User.findOne({ username })
+        .select("-__v -password")
+        .populate("tweets")
+        .populate("followers")
+        .populate("following")
+        .populate("notifications")
+        .populate("likes");
+    },
+    tweets: async (parent, { username }) => {
+      const params = username ? { username } : {};
+      return Tweet.find(params).sort({ createdAt: -1 });
+    },
+    tweet: async (parent, { _id }) => {
+      return Tweet.findOne({ _id });
+    },
   },
-//   Mutation: {
-//     addUser: async (parent, args) => {
-//       // args come from the typeDefs
-//       const user = await User.create(args);
-//       const token = signToken(user);
-//       return { token, user };
-//     },
-//     login: async (parent, { email, password }) => {
-//       const user = await User.findOne({ email });
-//       if (!user) {
-//         throw new AuthenticationError("Incorrect credentials");
-//       }
-//       const correctPw = await user.isCorrectPassword(password);
-//       if (!correctPw) {
-//         throw new AuthenticationError("Incorrect credentials");
-//       }
+  Mutation: {
+    login: async (parent, {email, password}) => {
+      const user = await User.findOne({email});
+      if (!user) {
+        throw new AuthenticationError("Incorrect email/password");
+      }
+      const correctPw = await user.isCorrectPassword(password);
+      if (!correctPw) {
+        throw new AuthenticaitionError("Incorrect email/password")
+      }
 
-//       const token = signToken(user);
-//       return { token, user };
-//     },
-//     addThought: async (parent, args, context) => {
-//       // args come from the typeDefs
-//       if (context.user) {
-//         const thought = await Thought.create({
-//           ...args,
-//           username: context.user.username,
-//         });
+      const token = signToken(user);
+      return {token, user};
+    },
+    addUser: async (parents, args) => {
+      const user = await User.create(args);
+      return user;
+    },    
+    // need context as parameter to find the currently logged in user
+    addTweet: async (parent, args) => {
+      // args come from the typeDefs
+      const {userId, text} = args;
+      const user = await User.findById(
+        {
+        _id: userId
+        });
 
-//         await User.findByIdAndUpdate(
-//           { _id: context.user._id },
-//           { $push: { thoughts: thought._id } },
-//           { new: true }
-//         );
+      if (user) {
+        const tweet = await Tweet.create({
+          text: text,
+          userId: userId,
+        });
 
-//         return thought;
-//       }
+        await User.findByIdAndUpdate(
+          { _id: userId },
+          { $push: { tweets: tweet._id } },
+          { new: true }
+        );
+          
+        return tweet;
+      }
 
-//       throw new AuthenticationError("You need to be logged in!");
-//     },
-//     addReaction: async (parent, { thoughtId, reactionBody }, context) => {
-//       // args come from the typeDefs
-//       if (context.user) {
-//         const updatedThought = await Thought.findOneAndUpdate(
-//           { _id: thoughtId },
-//           {
-//             $push: {
-//               reactions: { reactionBody, username: context.user.username },
-//             },
-//           },
-//           { new: true, runValidators: true }
-//         );
-
-//         return updatedThought;
-//       }
-
-//       throw new AuthenticationError("You need to be logged in!");
-//     },
-//     addFriend: async (parent, { friendId }, context) => {
-//       // args come from the typeDefs
-//       if (context.user) {
-//         const updatedUser = await User.findOneAndUpdate(
-//           { _id: context.user._id },
-//           { $addToSet: { friends: friendId } },
-//           { new: true }
-//         ).populate("friends");
-
-//         return updatedUser;
-//       }
-
-//       throw new AuthenticationError("You need to be logged in!");
-//     },
-//   },
+      throw new AuthenticationError("You need to be logged in!");
+    },
+    //login
+    //updateUser
+    //deleteTweet
+    //addFollower
+    //addFollowing
+    //deleteFollower
+    //deleteFollowing
+    //likeTweet
+    //notifyUser
+    //retweet
+    //reply
+    //changePrivacy
+    //deleteAccount?
+  },
 };
 
 module.exports = resolvers;

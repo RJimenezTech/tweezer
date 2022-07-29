@@ -1,3 +1,4 @@
+const { NoFragmentCyclesRule } = require('graphql');
 const { Schema, model } = require('mongoose');
 const dateFormat = require('../utils/dateFormat');
 
@@ -5,7 +6,7 @@ const tweetSchema = new Schema(
   {
     text: {
       type: String,
-      required: 'You need to leave a thought!',
+      required: 'You need to leave a Tweet!',
       minlength: 1,
       maxlength: 280
     },
@@ -19,10 +20,9 @@ const tweetSchema = new Schema(
       default: Date.now,
       get: timestamp => dateFormat(timestamp)
     },
-    username: {
+    userId: {
       type: String,
       required: true,
-      unique: true
     },
     replies: [
       {
@@ -43,10 +43,12 @@ const tweetSchema = new Schema(
         }
     ],
     isRetweet: {
-        type: Boolean, 
+        type: Boolean,
+        default: false 
     }, 
     isReply: {
         type: Boolean,
+        default: false
     }, 
     mentions: [
         {

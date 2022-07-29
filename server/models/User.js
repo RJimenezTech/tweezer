@@ -5,7 +5,6 @@ const userSchema = new Schema(
   {
     name: {
       type: String,
-      required: true,
       trim: true
     },
     username: {
@@ -34,7 +33,8 @@ const userSchema = new Schema(
       trim: true
     },
     isPublic: {
-      type: Boolean
+      type: Boolean,
+      default: false
     },
     notifications: [
       {

@@ -22,9 +22,9 @@ const typeDefs = gql`
 
   type Tweet {
     _id: ID
-    tweet: String
+    text: String
     createdAt: String
-    username: String
+    userId: String
     replies: [Tweet]
     likes: [User]
     retweets: [User]
@@ -42,6 +42,17 @@ const typeDefs = gql`
     user(username: String!): User
     tweets(username: String): [Tweet]
     tweet(_id: ID!): Tweet
+  }
+
+  type Mutation {
+    addUser(username:String!,email:String!,password:String!): User
+    addTweet(userId: String!, text: String!): Tweet
+    login(email: String!, password: String!): Auth
+  }
+
+  type Auth {
+    token: ID!
+    user: User
   }
 `;
 //   type Mutation {
