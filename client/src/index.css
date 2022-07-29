@@ -1,6 +1,6 @@
 .bg-img {
     background-size: cover !important;
-    background-image: url("https://images.unsplash.com/photo-1530669244764-0909211cd8e8?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=687&q=80");
+    background-image: url("./assets/images/tweezer-banner.avif");
 }
 
 .primary {
@@ -29,4 +29,28 @@
 .logo {
     width: 4rem;
     height: auto;
+}
+
+.home-header:not(.header-text) {
+    position: sticky !important;
+    top: 0 !important;
+    z-index: 999 !important;
+}
+
+.center-feed {
+    overflow: scroll !important;
+    height: 100vh !important;
+    -ms-overflow-style: none !important;
+    scrollbar-width: none !important;
+}
+
+.center-feed::-webkit-scrollbar {
+  display: none;
+}
+
+.border {
+    padding: 0 !important;
+    resize: none !important;
+    outline: 0px none !important;
+    
 }
