@@ -6,7 +6,7 @@ import tweezer from "../assets/images/tweezer.svg"
 
 function Feed() {
     return (
-      <div className="row min-vh-100">
+      <div className="row bg-light min-vh-100">
         <div className="col-4 d-flex justify-content-end text-dark">
           <div className="fs-3">
             <img src={tweezer} alt="tweezer logo" className="logo my-3"/>
@@ -48,27 +48,9 @@ function Feed() {
           </div>
         </div>
         <div className="col-4 border center-feed">
-          <header className="text-dark fs-5 fw-bold bg-danger home-header">
-            <p>Home</p>
+          <header className="text-dark fs-5 fw-bold bg-light home-header">
+            <p className="p-3 header-text">Home</p>
           </header>
-            <div>Lorem ipsum dolor sit amet consectetur adipisicing elit. Quaerat tenetur nesciunt ipsum placeat iusto eligendi maxime aut sint porro quo doloremque amet, ratione dignissimos nam fuga unde libero corporis rerum.</div>
-            <div>Lorem ipsum dolor sit amet consectetur adipisicing elit. Quaerat tenetur nesciunt ipsum placeat iusto eligendi maxime aut sint porro quo doloremque amet, ratione dignissimos nam fuga unde libero corporis rerum.</div>
-            <div>Lorem ipsum dolor sit amet consectetur adipisicing elit. Quaerat tenetur nesciunt ipsum placeat iusto eligendi maxime aut sint porro quo doloremque amet, ratione dignissimos nam fuga unde libero corporis rerum.</div>
-            <div>Lorem ipsum dolor sit amet consectetur adipisicing elit. Quaerat tenetur nesciunt ipsum placeat iusto eligendi maxime aut sint porro quo doloremque amet, ratione dignissimos nam fuga unde libero corporis rerum.</div>
-            <div>Lorem ipsum dolor sit amet consectetur adipisicing elit. Quaerat tenetur nesciunt ipsum placeat iusto eligendi maxime aut sint porro quo doloremque amet, ratione dignissimos nam fuga unde libero corporis rerum.</div>
-            <div>Lorem ipsum dolor sit amet consectetur adipisicing elit. Quaerat tenetur nesciunt ipsum placeat iusto eligendi maxime aut sint porro quo doloremque amet, ratione dignissimos nam fuga unde libero corporis rerum.</div>
-            <div>Lorem ipsum dolor sit amet consectetur adipisicing elit. Quaerat tenetur nesciunt ipsum placeat iusto eligendi maxime aut sint porro quo doloremque amet, ratione dignissimos nam fuga unde libero corporis rerum.</div>
-            <div>Lorem ipsum dolor sit amet consectetur adipisicing elit. Quaerat tenetur nesciunt ipsum placeat iusto eligendi maxime aut sint porro quo doloremque amet, ratione dignissimos nam fuga unde libero corporis rerum.</div>
-            <div>Lorem ipsum dolor sit amet consectetur adipisicing elit. Quaerat tenetur nesciunt ipsum placeat iusto eligendi maxime aut sint porro quo doloremque amet, ratione dignissimos nam fuga unde libero corporis rerum.</div>
-            <div>Lorem ipsum dolor sit amet consectetur adipisicing elit. Quaerat tenetur nesciunt ipsum placeat iusto eligendi maxime aut sint porro quo doloremque amet, ratione dignissimos nam fuga unde libero corporis rerum.</div>
-            <div>Lorem ipsum dolor sit amet consectetur adipisicing elit. Quaerat tenetur nesciunt ipsum placeat iusto eligendi maxime aut sint porro quo doloremque amet, ratione dignissimos nam fuga unde libero corporis rerum.</div>
-            <div>Lorem ipsum dolor sit amet consectetur adipisicing elit. Quaerat tenetur nesciunt ipsum placeat iusto eligendi maxime aut sint porro quo doloremque amet, ratione dignissimos nam fuga unde libero corporis rerum.</div>
-            <div>Lorem ipsum dolor sit amet consectetur adipisicing elit. Quaerat tenetur nesciunt ipsum placeat iusto eligendi maxime aut sint porro quo doloremque amet, ratione dignissimos nam fuga unde libero corporis rerum.</div>
-            <div>Lorem ipsum dolor sit amet consectetur adipisicing elit. Quaerat tenetur nesciunt ipsum placeat iusto eligendi maxime aut sint porro quo doloremque amet, ratione dignissimos nam fuga unde libero corporis rerum.</div>
-            <div>Lorem ipsum dolor sit amet consectetur adipisicing elit. Quaerat tenetur nesciunt ipsum placeat iusto eligendi maxime aut sint porro quo doloremque amet, ratione dignissimos nam fuga unde libero corporis rerum.</div>
-            <div>Lorem ipsum dolor sit amet consectetur adipisicing elit. Quaerat tenetur nesciunt ipsum placeat iusto eligendi maxime aut sint porro quo doloremque amet, ratione dignissimos nam fuga unde libero corporis rerum.</div>
-            <div>Lorem ipsum dolor sit amet consectetur adipisicing elit. Quaerat tenetur nesciunt ipsum placeat iusto eligendi maxime aut sint porro quo doloremque amet, ratione dignissimos nam fuga unde libero corporis rerum.</div>
-            <div>Lorem ipsum dolor sit amet consectetur adipisicing elit. Quaerat tenetur nesciunt ipsum placeat iusto eligendi maxime aut sint porro quo doloremque amet, ratione dignissimos nam fuga unde libero corporis rerum.</div>
         </div>
         <div className="col-4"></div>
       </div>
