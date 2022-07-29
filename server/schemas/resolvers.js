@@ -25,36 +25,41 @@ const resolvers = {
         .populate("likes")
         .populate("notifications");
     },
-    // user: async (parent, { username }) => {
-    //   return User.findOne({ username })
-    //     .select("-__v -password")
-    //     .populate("friends")
-    //     .populate("thoughts");
-    // },
-    // thoughts: async (parent, { username }) => {
-    //   const params = username ? { username } : {};
-    //   return Thought.find(params).sort({ createdAt: -1 });
-    // },
-    // thought: async (parent, { _id }) => {
-    //   return Thought.findOne({ _id });
-    // },
+    user: async (parent, { username }) => {
+      return User.findOne({ username })
+        .select("-__v -password")
+        .populate("tweets")
+        .populate("followers")
+        .populate("following")
+        .populate("notifications")
+        .populate("likes");
+    },
+    tweets: async (parent, { username }) => {
+      const params = username ? { username } : {};
+      return Tweet.find(params).sort({ createdAt: -1 });
+    },
+    tweet: async (parent, { _id }) => {
+      return Tweet.findOne({ _id });
+    },
   },
   Mutation: {
+    login: async (parent, {email, password}) => {
+      const user = await User.findOne({email});
+      if (!user) {
+        throw new AuthenticationError("Incorrect email/password");
+      }
+      const correctPw = await user.isCorrectPassword(password);
+      if (!correctPw) {
+        throw new AuthenticaitionError("Incorrect email/password")
+      }
+
+      const token = signToken(user);
+      return {token, user};
+    },
     addUser: async (parents, args) => {
       const user = await User.create(args);
       return user;
-    },
-    // updateUser: async (parents, args) => {
-    //   const {username} = args;
-    //   const user = await User.find({username: username});
-    //   if (user) {
-    //     await User.findByIdAndUpdate(
-    //       {_id: user.id},
-    //       {...}
-    //     )
-    //   }
-
-    // },
+    },    
     // need context as parameter to find the currently logged in user
     addTweet: async (parent, args) => {
       // args come from the typeDefs
@@ -75,7 +80,7 @@ const resolvers = {
           { $push: { tweets: tweet._id } },
           { new: true }
         );
-
+          
         return tweet;
       }
 
@@ -86,6 +91,8 @@ const resolvers = {
     //deleteTweet
     //addFollower
     //addFollowing
+    //deleteFollower
+    //deleteFollowing
     //likeTweet
     //notifyUser
     //retweet

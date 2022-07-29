@@ -47,6 +47,12 @@ const typeDefs = gql`
   type Mutation {
     addUser(username:String!,email:String!,password:String!): User
     addTweet(userId: String!, text: String!): Tweet
+    login(email: String!, password: String!): Auth
+  }
+
+  type Auth {
+    token: ID!
+    user: User
   }
 `;
 //   type Mutation {
