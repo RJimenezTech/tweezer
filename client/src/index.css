@@ -30,3 +30,11 @@
     width: 4rem;
     height: auto;
 }
+
+.home-header {
+    backdrop-filter: blur(6px);
+}
+
+.center-feed {
+    overflow-y: scroll;
+}
