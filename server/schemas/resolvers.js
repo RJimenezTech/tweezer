@@ -4,18 +4,21 @@ const { signToken } = require("../utils/auth");
 
 const resolvers = {
   Query: {
-    // me: async (parent, args, context) => {
-    //   if (context.user) {
-    //     const userData = await User.findOne({ _id: context.user._id })
-    //       .select("-__v -password")
-    //       .populate("thoughts")
-    //       .populate("friends");
+    me: async (parent, args, context) => {
+      if (context.user) {
+        const userData = await User.findOne({ _id: context.user._id })
+          .select("-__v -password")
+          .populate("tweets")
+          .populate("followers")
+          .populate("following")
+          .populate("likes")
+          .populate("notifications");
 
-    //     return userData;
-    //   }
+        return userData;
+      }
 
-    //   throw new AuthenticationError("Not logged in");
-    // },
+      throw new AuthenticationError("Not logged in");
+    },
     users: async () => {
       return User.find()
         .select("-__v -password")
@@ -86,17 +89,32 @@ const resolvers = {
 
       throw new AuthenticationError("You need to be logged in!");
     },
-    //login
-    //updateUser
-    //deleteTweet
-    //addFollower
-    //addFollowing
-    //deleteFollower
-    //deleteFollowing
-    //likeTweet
+    // add context to get the logged in user's info
+    follow: async(parent, args) => {
+      const {myId, otherId} = args;
+      // push the other user to my followers array
+      const myUser = await User.findByIdAndUpdate(
+        {_id: myId},
+        {$push: {following: otherId}},
+        {new: true, runValidators: true}
+      ).populate("followers");
+        console.log(myUser);
+      // push myself to other user's following array
+      const otherUser = await User.findByIdAndUpdate(
+        {_id: otherId},
+        {$push: {followers: myId}},
+        {new: true}
+      );
+      return myUser.following;
+    },
     //notifyUser
     //retweet
     //reply
+    //likeTweet
+    //updateUser
+    //deleteTweet
+    //deleteFollower
+    //deleteFollowing 
     //changePrivacy
     //deleteAccount?
   },
