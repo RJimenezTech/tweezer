@@ -6,10 +6,7 @@ export const LOGIN_USER = gql`
       token
       user {
         _id
-<<<<<<< HEAD
-=======
         name
->>>>>>> develop
         username
       }
     }
