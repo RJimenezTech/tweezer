@@ -142,7 +142,7 @@ const resolvers = {
         _id: userId
         })
       
-      await Tweet.findByIdAndUpdate(
+      const updatedTweet = await Tweet.findByIdAndUpdate(
         {_id: tweetId},
         {$push: {likes: userId}},
         {new: true}
@@ -155,7 +155,7 @@ const resolvers = {
           { new: true }
         );
           
-        return user;
+        return updatedTweet;
       }
 
       throw new AuthenticationError("You need to be logged in!");
