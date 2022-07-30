@@ -56,6 +56,7 @@ const typeDefs = gql`
     follow(myId: String!, otherId: String!): [User]
     retweet(userId: String!, tweetId: String!): Tweet
     likeTweet(userId: String!, tweetId: String!): Tweet
+    reply(userId: String!, text: String!, tweetId: String!): Tweet
   }
 `;
 

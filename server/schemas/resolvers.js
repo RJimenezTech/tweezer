@@ -160,9 +160,40 @@ const resolvers = {
 
       throw new AuthenticationError("You need to be logged in!");
     },
+    reply: async (parent, args) => {
+      // args come from the typeDefs
+      const {userId, text, tweetId} = args;
+        // args come from the typeDefs
+      const user = await User.findById({
+        _id: userId,
+      });
+
+      if (user) {
+        const tweet = await Tweet.create({
+          text: text,
+          userId: userId,
+          isReply: true
+        });
+
+        await Tweet.findByIdAndUpdate(
+          { _id: tweetId },
+          { $push: { replies: tweet._id } },
+          { new: true }
+        );
+          
+        await User.findByIdAndUpdate(
+          { _id: userId },
+          { $push: { tweets: tweet._id } },
+          { new: true }
+        );
+
+        return tweet;
+      }
+
+      throw new AuthenticationError("You need to be logged in!");
+    },
     //notifyUser
     //reply
-    //likeTweet
     //updateUser
     //deleteTweet
     //deleteFollower
