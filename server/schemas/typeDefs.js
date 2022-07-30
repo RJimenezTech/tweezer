@@ -50,6 +50,7 @@ const typeDefs = gql`
     login(email: String!, password: String!): Auth
     follow(myId: String!, otherId: String!): [User]
     retweet(userId: String!, tweetId: String!): Tweet
+    likeTweet(userId: String!, tweetId: String!): Tweet
   }
 
   type Auth {

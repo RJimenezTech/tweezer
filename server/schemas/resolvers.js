@@ -114,6 +114,12 @@ const resolvers = {
         {
         _id: userId
         })
+      
+      await Tweet.findByIdAndUpdate(
+        {_id: tweetId},
+        {$push: {retweets: userId}},
+        {new: true}
+      )
 
       if (user) {
         await User.findByIdAndUpdate(
@@ -124,18 +130,42 @@ const resolvers = {
           
         return user;
       }
+
+      throw new AuthenticationError("You need to be logged in!");
+    },
+    likeTweet: async (parent, args) => {
+      // args come from the typeDefs
+      const {userId, tweetId} = args;
+      const user = await User.findById(
+        {
+        _id: userId
+        })
+      
+      await Tweet.findByIdAndUpdate(
+        {_id: tweetId},
+        {$push: {likes: userId}},
+        {new: true}
+      )
+
+      if (user) {
+        await User.findByIdAndUpdate(
+          { _id: userId },
+          { $push: { likes: tweetId } },
+          { new: true }
+        );
+          
+        return user;
+      }
+
       throw new AuthenticationError("You need to be logged in!");
     },
     //notifyUser
-    //retweet
     //reply
     //likeTweet
     //updateUser
-
     //deleteTweet
     //deleteFollower
     //deleteFollowing 
-
     //changePrivacy
     //deleteAccount?
   },
