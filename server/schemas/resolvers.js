@@ -107,14 +107,35 @@ const resolvers = {
       );
       return myUser.following;
     },
+    retweet: async (parent, args) => {
+      // args come from the typeDefs
+      const {userId, tweetId} = args;
+      const user = await User.findById(
+        {
+        _id: userId
+        })
+
+      if (user) {
+        await User.findByIdAndUpdate(
+          { _id: userId },
+          { $push: { tweets: tweetId } },
+          { new: true }
+        );
+          
+        return user;
+      }
+      throw new AuthenticationError("You need to be logged in!");
+    },
     //notifyUser
     //retweet
     //reply
     //likeTweet
     //updateUser
+
     //deleteTweet
     //deleteFollower
     //deleteFollowing 
+
     //changePrivacy
     //deleteAccount?
   },
