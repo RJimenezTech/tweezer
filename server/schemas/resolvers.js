@@ -4,18 +4,21 @@ const { signToken } = require("../utils/auth");
 
 const resolvers = {
   Query: {
-    // me: async (parent, args, context) => {
-    //   if (context.user) {
-    //     const userData = await User.findOne({ _id: context.user._id })
-    //       .select("-__v -password")
-    //       .populate("thoughts")
-    //       .populate("friends");
+    me: async (parent, args, context) => {
+      if (context.user) {
+        const userData = await User.findOne({ _id: context.user._id })
+          .select("-__v -password")
+          .populate("tweets")
+          .populate("followers")
+          .populate("following")
+          .populate("likes")
+          .populate("notifications");
 
-    //     return userData;
-    //   }
+        return userData;
+      }
 
-    //   throw new AuthenticationError("Not logged in");
-    // },
+      throw new AuthenticationError("Not logged in");
+    },
     users: async () => {
       return User.find()
         .select("-__v -password")
@@ -87,32 +90,83 @@ const resolvers = {
 
       throw new AuthenticationError("You need to be logged in!");
     },
-    login: async (parent, { email, password }) => {
-      const user = await User.findOne({ email });
-
-      if (!user) {
-        throw new AuthenticationError("Incorrect credentials");
-      }
-
-      const correctPw = await user.isCorrectPassword(password);
-
-      if (!correctPw) {
-        throw new AuthenticationError("Incorrect credentials");
-      }
-
-      const token = signToken(user);
-      return { token, user };
+    // add context to get the logged in user's info
+    follow: async(parent, args) => {
+      const {myId, otherId} = args;
+      // push the other user to my followers array
+      const myUser = await User.findByIdAndUpdate(
+        {_id: myId},
+        {$push: {following: otherId}},
+        {new: true, runValidators: true}
+      ).populate("followers");
+        console.log(myUser);
+      // push myself to other user's following array
+      const otherUser = await User.findByIdAndUpdate(
+        {_id: otherId},
+        {$push: {followers: myId}},
+        {new: true}
+      );
+      return myUser.following;
     },
+    retweet: async (parent, args) => {
+      // args come from the typeDefs
+      const {userId, tweetId} = args;
+      const user = await User.findById(
+        {
+        _id: userId
+        })
+      
+      await Tweet.findByIdAndUpdate(
+        {_id: tweetId},
+        {$push: {retweets: userId}},
+        {new: true}
+      )
+
+      if (user) {
+        await User.findByIdAndUpdate(
+          { _id: userId },
+          { $push: { tweets: tweetId } },
+          { new: true }
+        );
+          
+        return user;
+      }
+
+      throw new AuthenticationError("You need to be logged in!");
+    },
+    likeTweet: async (parent, args) => {
+      // args come from the typeDefs
+      const {userId, tweetId} = args;
+      const user = await User.findById(
+        {
+        _id: userId
+        })
+      
+      await Tweet.findByIdAndUpdate(
+        {_id: tweetId},
+        {$push: {likes: userId}},
+        {new: true}
+      )
+
+      if (user) {
+        await User.findByIdAndUpdate(
+          { _id: userId },
+          { $push: { likes: tweetId } },
+          { new: true }
+        );
+          
+        return user;
+      }
+
+      throw new AuthenticationError("You need to be logged in!");
+    },
+    //notifyUser
+    //reply
+    //likeTweet
     //updateUser
     //deleteTweet
-    //addFollower
-    //addFollowing
     //deleteFollower
-    //deleteFollowing
-    //likeTweet
-    //notifyUser
-    //retweet
-    //reply
+    //deleteFollowing 
     //changePrivacy
     //deleteAccount?
   },
