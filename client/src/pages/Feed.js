@@ -1,12 +1,13 @@
 import React from "react";
 
 import HomeTweet from "../components/HomeTweet";
-import Auth from "../utils/auth";
+import SingleTweet from "../components/SingleTweet";
+// import Auth from "../utils/auth";
 
 import tweezer from "../assets/images/tweezer.svg"
 
 function Feed() {
-  const loggedIn = Auth.loggedIn();
+  const loggedIn = true;
   return (
     <main>
       {loggedIn ? (
@@ -55,7 +56,8 @@ function Feed() {
             <header className="text-dark fs-5 fw-bold bg-light home-header">
               <p className="p-3 header-text">Home</p>
             </header>
-            <HomeTweet></HomeTweet>
+            <HomeTweet/>
+            <SingleTweet/>
           </div>
           <div className="col-4"></div>
         </div>
