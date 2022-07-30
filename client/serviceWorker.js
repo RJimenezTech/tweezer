@@ -1,3 +1,5 @@
+// I included this file as a JUST IN CASE. We don't need to add MORE on our plates than necessary. If we want to get rid of this before Thursday. I'm okay with that. 
+
 // This optional code is used to register a service worker.
 // register() is not called by default.
 
