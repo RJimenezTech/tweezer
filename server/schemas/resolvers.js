@@ -161,7 +161,6 @@ const resolvers = {
     },
     //notifyUser
     //reply
-    //likeTweet
     //updateUser
     //deleteTweet
     //deleteFollower
