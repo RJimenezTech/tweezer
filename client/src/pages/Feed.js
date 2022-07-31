@@ -1,9 +1,15 @@
 import{ React, useState } from "react";
 
-import Settings from "../components/Settings";
-import HomeTweet from "../components/HomeTweet";
-import SingleTweet from "../components/SingleTweet";
 import Nav from "../components/Nav";
+import HomeTweet from "../components/HomeTweet";
+import Explore from "../components/Explore";
+import Notifications from "../components/Notifications";
+import Messages from "../components/Messages";
+import Bookmarks from "../components/Bookmarks";
+import Lists from "../components/Lists";
+import Profile from "../components/Profile";
+import Settings from "../components/Settings";
+
 import Auth from "../utils/auth";
 
 function Feed() {
@@ -23,6 +29,12 @@ function Feed() {
           </div>
           <div className="col-4 border center-feed">
             {currentTab === 1 && <HomeTweet />}
+            {currentTab === 2 && <Explore />}
+            {currentTab === 3 && <Notifications />}
+            {currentTab === 4 && <Messages />}
+            {currentTab === 5 && <Bookmarks />}
+            {currentTab === 6 && <Lists />}
+            {currentTab === 7 && <Profile />}
             {currentTab === 8 && <Settings />}
           </div>
           <div className="col-4"></div>
