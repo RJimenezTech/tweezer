@@ -2,13 +2,14 @@ import { React, useState } from 'react';
 
 import tweezer from "../../assets/images/tweezer.svg";
 
-function Nav() {
+function Nav(props) {
 
     //default state = "Home"
     const [toggleState, setToggleState] = useState(1);
 
     const toggleTab = (i) => {
         setToggleState(i);
+        props.passData(i);
     }
 
     return (
@@ -44,7 +45,7 @@ function Nav() {
         </div>
         <div onClick={() => toggleTab(8)} className={ toggleState === 8 ? "active d-flex flex-row my-2" : "option d-flex flex-row my-2"}>
           <i className={toggleState === 8 ? "bi bi-gear-fill mx-2" : "bi bi-gear mx-2"}></i>
-          <p className="my-auto w-100 mx-3">More</p>
+          <p className="my-auto w-100 mx-3">Settings</p>
         </div>
         <button className="my-4 w-100 rounded-pill btn text-light fw-bold primary btn-lg">
           Tweet

@@ -2,7 +2,7 @@ import React from "react";
 
 import defaultPFP from "../../assets/images/default-pfp.jpg";
 
-function HomeTweet() {
+function HomeTweet(tab) {
   return (
       <div className="row mx-2 border-bottom">
         <header className="text-dark fs-5 fw-bold bg-light home-header">
