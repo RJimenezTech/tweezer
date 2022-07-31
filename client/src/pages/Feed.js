@@ -2,12 +2,12 @@ import React from "react";
 
 import HomeTweet from "../components/HomeTweet";
 import SingleTweet from "../components/SingleTweet";
-// import Auth from "../utils/auth";
+import Auth from "../utils/auth";
 
 import tweezer from "../assets/images/tweezer.svg"
 
 function Feed() {
-  const loggedIn = true;
+  const loggedIn = Auth.loggedIn();
   return (
     <main>
       {loggedIn ? (
