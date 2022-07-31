@@ -19,6 +19,11 @@
     color: #FF7433 !important;
 }
 
+.active {
+    color: #FF7433 !important;
+    cursor: pointer;
+}
+
 .option:hover {
     color: #FF7433 !important;
     cursor: pointer;

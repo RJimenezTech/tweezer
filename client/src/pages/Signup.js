@@ -5,11 +5,11 @@ import { ADD_USER } from "../utils/mutations";
 import Auth from "../utils/auth";
 
 const Signup = () => {
-  const [formState, setFormState] = useState({ username: '', email: '', password: '' });
+  const [formState, setFormState] = useState({ username: '', email: '', password: '', });
   const [addUser, { error }] = useMutation(ADD_USER);
 
   // update state based on form input changes
-  const handleChange = event => {
+  const handleChange = (event) => {
     const { name, value } = event.target;
 
     setFormState({
@@ -18,23 +18,25 @@ const Signup = () => {
     });
   };
 
+  console.log(formState)
+
   // submit form
 // submit form (notice the async!)
-const handleFormSubmit = async event => {
-  event.preventDefault();
+  const handleFormSubmit = async event => {
+    event.preventDefault();
 
-  // use try/catch instead of promises to handle errors
-  try {
-    // execute addUser mutation and pass in variable data from form
-    const { data } = await addUser({
-      variables: { ...formState }
-    });
-  
-    Auth.login(data.addUser.token);
-  } catch (e) {
-    console.error(e);
-  }
-};
+    // use try/catch instead of promises to handle errors
+    try {
+      // execute addUser mutation and pass in variable data from form
+      const { data } = await addUser({
+        variables: { ...formState }
+      });
+    
+      Auth.login(data.addUser.token);
+    } catch (e) {
+      console.error(e);
+    }
+  };
 
   return (
     <div className="row w-100 min-vh-100 bg-light">
@@ -77,6 +79,13 @@ const handleFormSubmit = async event => {
               Lets go!
             </button>
           </form>
+          <p className="fs-5 text-dark">
+            Already have an account? Log in{" "}
+            <a className="primary-link text-decoration-none" href="/login">
+              here
+            </a>
+            !
+          </p>
           {error && <div>Sign-up failed</div>}
         </div>
       </div>
