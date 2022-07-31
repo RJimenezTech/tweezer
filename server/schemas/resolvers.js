@@ -221,25 +221,29 @@ const resolvers = {
       if(args.name) {
         await User.findByIdAndUpdate(
           {_id: userId},
-          {name: name}
+          {name: name},
+          {new: true}
         )
       }
       if(args.url) {
         await User.findByIdAndUpdate(
           {_id: userId},
-          {description: description}
+          {description: description},
+          {new: true}
         )
       }
       if(args.url) {
         await User.findByIdAndUpdate(
           {_id: userId},
-          {url: url}
+          {url: url},
+          {new: true}
         )
       }
       if(args.url) {
         await User.findByIdAndUpdate(
           {_id: userId},
-          {isPublic: isPublic}
+          {isPublic: isPublic},
+          {new: true}
         )
       }
 
