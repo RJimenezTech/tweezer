@@ -25,7 +25,7 @@ function SingleTweet({ tweets }) {
                   <a
                     className="text-decoration-none text-secondary option"
                     href="github.com">
-                    {tweet.userId}
+                    @{tweet.username}
                   </a>
                 </div>
               </div>
