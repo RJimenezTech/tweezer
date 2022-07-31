@@ -4,7 +4,14 @@ import { LOGIN_USER } from "../utils/mutations";
 
 import Auth from "../utils/auth";
 
+function loggedInCheck() {
+  if (Auth.loggedIn()) {
+    window.location.assign("/feed");
+  }
+}
+
 function Login() {
+  loggedInCheck();
   const [formState, setFormState] = useState({ email: "", password: "" });
   const [login, { error }] = useMutation(LOGIN_USER);
 
@@ -71,6 +78,13 @@ function Login() {
               Lets go!
             </button>
           </form>
+          <p className="fs-5 text-dark">
+            Don't have an account yet? Sign up{" "}
+            <a className="primary-link text-decoration-none" href="/signup">
+              here
+            </a>
+            !
+          </p>
         </div>
       </div>
       {error && <div>Login failed</div>}

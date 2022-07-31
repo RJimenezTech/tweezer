@@ -79,6 +79,13 @@ const Signup = () => {
               Lets go!
             </button>
           </form>
+          <p className="fs-5 text-dark">
+            Already have an account? Log in{" "}
+            <a className="primary-link text-decoration-none" href="/login">
+              here
+            </a>
+            !
+          </p>
           {error && <div>Sign-up failed</div>}
         </div>
       </div>

@@ -12,7 +12,7 @@ function Home() {
                 Sign up
               </a>
             </button>
-            <p className="lead text-dark">
+            <p className="fs-5 text-dark">
               Already have an account? Log in{" "}
               <a
                 className="primary-link text-decoration-none"
