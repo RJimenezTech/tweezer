@@ -24,6 +24,10 @@ const tweetSchema = new Schema(
       type: String,
       required: true,
     },
+    username: {
+      type: String, 
+      required: true,
+    },
     replies: [
       {
         type: Schema.Types.ObjectId,

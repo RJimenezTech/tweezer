@@ -68,21 +68,24 @@ db.once("open", async () => {
   }
 
   // create tweets
-  let createdtweets = [];
+  let createdTweets = [];
   for (let i = 0; i < 250; i += 1) {
     const text = faker.lorem.words(Math.round(Math.random() * 20) + 1);
-
+    console.log(text);
     const randomUserIndex = Math.floor(Math.random() * createdUsers.insertedCount);
-    const { _id: userId } = createdUsers.insertedIds[randomUserIndex];
-
-    const createdtweet = await Tweet.create({ text, userId });
-
+    const { _id: userId} = createdUsers.insertedIds[randomUserIndex];
+    console.log(userId);
+    const randomUser = await User.findById(userId);
+    const username = randomUser.username;
+    console.log(username);
+    const createdTweet = await Tweet.create({ text, userId, username });
+    console.log(createdTweet);
     const updatedUser = await User.updateOne(
       { _id: userId },
-      { $push: { tweets: createdtweet._id } }
+      { $push: { tweets: createdTweet._id } }
     );
 
-    createdtweets.push(createdtweet);
+    createdTweets.push(createdTweet);
   }
 
   console.log("all done!");

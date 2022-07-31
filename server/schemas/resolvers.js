@@ -71,7 +71,6 @@ const resolvers = {
     },
     // need context as parameter to find the currently logged in user
     addTweet: async (parent, args) => {
-      // args come from the typeDefs
       const { userId, text } = args;
       const user = await User.findById({
         _id: userId,
@@ -81,8 +80,9 @@ const resolvers = {
         const tweet = await Tweet.create({
           text: text,
           userId: userId,
+          username: user.username,
         });
-
+        
         await User.findByIdAndUpdate(
           { _id: userId },
           { $push: { tweets: tweet._id } },
@@ -193,6 +193,7 @@ const resolvers = {
         const tweet = await Tweet.create({
           text: text,
           userId: userId,
+          username: user.username,
           isReply: true
         });
 
@@ -252,7 +253,6 @@ const resolvers = {
     //deleteTweet
     //deleteFollower
     //deleteFollowing 
-    //changePrivacy
     //deleteAccount?
   },
 };
