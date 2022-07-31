@@ -3,8 +3,11 @@ import React from "react";
 import defaultPFP from "../../assets/images/default-pfp.jpg";
 
 function HomeTweet() {
-    return (
+  return (
       <div className="row mx-2 border-bottom">
+        <header className="text-dark fs-5 fw-bold bg-light home-header">
+          <p className="p-3 header-text">Home</p>
+        </header>
         <div className="col-2">
           <img
             src={defaultPFP}
