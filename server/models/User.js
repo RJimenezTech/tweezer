@@ -39,7 +39,7 @@ const userSchema = new Schema(
     notifications: [
       {
         type: Schema.Types.ObjectId,
-        ref: 'Tweet'
+        ref: 'Notification'
       }
     ],
     tweets: [
