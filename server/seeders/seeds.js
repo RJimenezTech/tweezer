@@ -1,11 +1,12 @@
 const faker = require("faker");
 
 const db = require("../config/connection");
-const { Tweet, User } = require("../models");
+const { Tweet, User, Notification } = require("../models");
 
 db.once("open", async () => {
   await Tweet.deleteMany({});
   await User.deleteMany({});
+  await Notification.deleteMany({});
 
   // create user data
   const userData = [];
@@ -30,46 +31,59 @@ db.once("open", async () => {
         isPublic 
       });
   }
-
   const createdUsers = await User.collection.insertMany(userData);
-
+  
   // create followers
-  // for (let i = 0; i < 100; i += 1) {
-  //   const randomUserIndex = Math.floor(Math.random() * createdUsers.ops.length);
-  //   const { _id: userId } = createdUsers.ops[randomUserIndex];
+  for (let i = 0; i < 250; i += 1) {
+    const randomUserIndex = Math.floor(Math.random() * createdUsers.insertedCount);
+    const { _id: userId } = createdUsers.insertedIds[randomUserIndex];
 
-  //   let followerId = userId;
+    let followerId = userId;
 
-  //   while (followerId === userId) {
-  //     const randomUserIndex = Math.floor(
-  //       Math.random() * createdUsers.ops.length
-  //     );
-  //     followerId = createdUsers.ops[randomUserIndex];
-  //   }
+    while (followerId === userId) {
+      const randomUserIndex = Math.floor(
+        Math.random() * createdUsers.insertedCount
+      );
+      followerId = createdUsers.insertedIds[randomUserIndex];
+    }
 
-  //   await User.updateOne({ _id: userId }, { $addToSet: { followers: followerId } });
-  // }
-
-  // create tweets
-  // let createdtweets = [];
-  // for (let i = 0; i < 100; i += 1) {
-  //   const text = faker.lorem.words(Math.round(Math.random() * 20) + 1);
-
-  //   const randomUserIndex = Math.floor(Math.random() * createdUsers.ops.length);
-  //   const { username, _id: userId } = createdUsers.ops[randomUserIndex];
-
-  //   const createdtweet = await Tweet.create({ text, username });
-
-  //   const updatedUser = await User.updateOne(
-  //     { _id: userId },
-  //     { $push: { tweets: createdtweet._id } }
-  //   );
-
-  //   createdtweets.push(createdtweet);
-  // }
+    await User.updateOne({ _id: userId }, { $addToSet: { followers: followerId } });
+  }
 
   // create following
+  for (let i = 0; i < 250; i += 1) {
+    const randomUserIndex = Math.floor(Math.random() * createdUsers.insertedCount);
+    const { _id: userId } = createdUsers.insertedIds[randomUserIndex];
 
+    let followingId = userId;
+
+    while (followingId === userId) {
+      const randomUserIndex = Math.floor(
+        Math.random() * createdUsers.insertedCount
+      );
+      followingId = createdUsers.insertedIds[randomUserIndex];
+    }
+
+    await User.updateOne({ _id: userId }, { $addToSet: { following: followingId } });
+  }
+
+  // create tweets
+  let createdtweets = [];
+  for (let i = 0; i < 250; i += 1) {
+    const text = faker.lorem.words(Math.round(Math.random() * 20) + 1);
+
+    const randomUserIndex = Math.floor(Math.random() * createdUsers.insertedCount);
+    const { _id: userId } = createdUsers.insertedIds[randomUserIndex];
+
+    const createdtweet = await Tweet.create({ text, userId });
+
+    const updatedUser = await User.updateOne(
+      { _id: userId },
+      { $push: { tweets: createdtweet._id } }
+    );
+
+    createdtweets.push(createdtweet);
+  }
 
   console.log("all done!");
   process.exit(0);
