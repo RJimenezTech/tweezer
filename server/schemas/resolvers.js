@@ -100,7 +100,7 @@ const resolvers = {
       // push the other user to my followers array
       const myUser = await User.findByIdAndUpdate(
         myId,
-        {$push: {following: otherId}},
+        {$addToSet: {following: otherId}},
         {new: true, runValidators: true}
       ).populate("followers");
         console.log(myUser);
@@ -116,7 +116,7 @@ const resolvers = {
       // push myself to other user's following array
       const otherUser = await User.findByIdAndUpdate(
         otherId,
-        {$push: {followers: myUser._id}},
+        {$addToSet: {followers: myUser._id}},
         {new: true}
       );
       // push notification to others user's nofitication array
@@ -146,7 +146,7 @@ const resolvers = {
       if (user) {
         await User.findByIdAndUpdate(
           { _id: userId },
-          { $push: { tweets: tweetId } },
+          { $addToSet: { tweets: tweetId } },
           { new: true }
         );
           
