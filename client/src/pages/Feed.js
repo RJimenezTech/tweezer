@@ -15,9 +15,6 @@ function Feed() {
             <Nav></Nav>
           </div>
           <div className="col-4 border center-feed">
-            <header className="text-dark fs-5 fw-bold bg-light home-header">
-              <p className="p-3 header-text">Home</p>
-            </header>
             <HomeTweet/>
             <SingleTweet/>
             <SingleTweet/>
