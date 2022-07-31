@@ -1,4 +1,4 @@
-import React from "react";
+import{ React, useState } from "react";
 
 import Settings from "../components/Settings";
 import HomeTweet from "../components/HomeTweet";
@@ -8,15 +8,22 @@ import Auth from "../utils/auth";
 
 function Feed() {
   const loggedIn = Auth.loggedIn();
+  // default tab is Home
+  const [currentTab, setCurrentTab] = useState(1);
+  const passData = (currentTab) => {
+    setCurrentTab(currentTab);
+  };
+
   return (
     <main>
       {loggedIn ? (
         <div className="row bg-light w-100 min-vh-100">
           <div className="col-4 d-flex justify-content-end text-dark">
-            <Nav></Nav>
+            <Nav passData={passData}></Nav>
           </div>
           <div className="col-4 border center-feed">
-            <Settings></Settings>
+            {currentTab === 1 && <HomeTweet />}
+            {currentTab === 8 && <Settings />}
           </div>
           <div className="col-4"></div>
         </div>
