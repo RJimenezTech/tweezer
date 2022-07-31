@@ -9,7 +9,7 @@ const typeDefs = gql`
     description: String
     url: String
     isPublic: Boolean
-    notifications: [Tweet]
+    notifications: [Notification]
     tweets: [Tweet]
     followers: [User]
     following: [User]
@@ -36,6 +36,15 @@ const typeDefs = gql`
     retweetCount: Int
   }
 
+  type Notification {
+    _id: ID
+    reason: String
+    userId: String
+    isViewed: Boolean
+    referencedUser: String
+    dateCreated: String
+  }
+
   type Auth {
     token: ID!
     user: User
@@ -47,16 +56,18 @@ const typeDefs = gql`
     user(username: String!): User
     tweets(username: String): [Tweet]
     tweet(_id: ID!): Tweet
+    notifications(userId: ID): [Notification]
   }
 
   type Mutation {
     addUser(username: String!, email: String!, password: String!): Auth
     addTweet(userId: String!, text: String!): Tweet
     login(email: String!, password: String!): Auth
-    follow(myId: String!, otherId: String!): [User]
+    follow(myId: String!, otherId: String!): User
     retweet(userId: String!, tweetId: String!): Tweet
     likeTweet(userId: String!, tweetId: String!): Tweet
     reply(userId: String!, text: String!, tweetId: String!): Tweet
+    updateUser(userId: ID!, name: String, description: String, url: String, isPublic: Boolean): User
   }
 `;
 

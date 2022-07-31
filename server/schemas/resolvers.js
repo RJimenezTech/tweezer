@@ -1,4 +1,4 @@
-const { User, Tweet } = require("../models");
+const { User, Tweet, Notification } = require("../models");
 const { AuthenticationError } = require("apollo-server-express");
 const { signToken } = require("../utils/auth");
 
@@ -44,6 +44,10 @@ const resolvers = {
     tweet: async (parent, { _id }) => {
       return Tweet.findOne({ _id });
     },
+    notifications: async (parent, { userId }) => {
+      const params = userId ? { userId } : {};
+      return Notification.find(params).sort({createdAt: -1});
+    }
   },
   Mutation: {
     addUser: async (parents, args) => {
@@ -95,18 +99,35 @@ const resolvers = {
       const {myId, otherId} = args;
       // push the other user to my followers array
       const myUser = await User.findByIdAndUpdate(
-        {_id: myId},
+        myId,
         {$push: {following: otherId}},
         {new: true, runValidators: true}
       ).populate("followers");
         console.log(myUser);
+
+      // notify the user of the follow
+      const notify = await Notification.create({
+        reason: "follow",
+        userId: otherId,
+        referencedUser: myId,
+      });
+      console.log(notify);
+      
       // push myself to other user's following array
       const otherUser = await User.findByIdAndUpdate(
-        {_id: otherId},
-        {$push: {followers: myId}},
+        otherId,
+        {$push: {followers: myUser._id}},
         {new: true}
       );
-      return myUser.following;
+      // push notification to others user's nofitication array
+      await User.findByIdAndUpdate(
+        otherId, 
+        {$push: {notifications: notify._id }},
+        {new: true}
+      );
+      console.log(otherUser);
+
+      return otherUser;
     },
     retweet: async (parent, args) => {
       // args come from the typeDefs
@@ -116,7 +137,7 @@ const resolvers = {
         _id: userId
         })
       
-      await Tweet.findByIdAndUpdate(
+      const retweeted = await Tweet.findByIdAndUpdate(
         {_id: tweetId},
         {$push: {retweets: userId}},
         {new: true}
@@ -129,7 +150,7 @@ const resolvers = {
           { new: true }
         );
           
-        return user;
+        return retweeted;
       }
 
       throw new AuthenticationError("You need to be logged in!");
@@ -142,11 +163,11 @@ const resolvers = {
         _id: userId
         })
       
-      await Tweet.findByIdAndUpdate(
+      const likedTweet = await Tweet.findByIdAndUpdate(
         {_id: tweetId},
         {$push: {likes: userId}},
         {new: true}
-      )
+      );
 
       if (user) {
         await User.findByIdAndUpdate(
@@ -155,7 +176,7 @@ const resolvers = {
           { new: true }
         );
           
-        return user;
+        return likedTweet;
       }
 
       throw new AuthenticationError("You need to be logged in!");
@@ -192,9 +213,38 @@ const resolvers = {
 
       throw new AuthenticationError("You need to be logged in!");
     },
-    //notifyUser
-    //reply
-    //updateUser
+    updateUser: async (parents, args) => {
+      const {userId, name, description, url, isPublic} = args;
+      const user = await User.findById(
+        {_id: userId}
+      );
+      if(args.name) {
+        await User.findByIdAndUpdate(
+          {_id: userId},
+          {name: name}
+        )
+      }
+      if(args.url) {
+        await User.findByIdAndUpdate(
+          {_id: userId},
+          {description: description}
+        )
+      }
+      if(args.url) {
+        await User.findByIdAndUpdate(
+          {_id: userId},
+          {url: url}
+        )
+      }
+      if(args.url) {
+        await User.findByIdAndUpdate(
+          {_id: userId},
+          {isPublic: isPublic}
+        )
+      }
+
+      return user;
+    }
     //deleteTweet
     //deleteFollower
     //deleteFollowing 
