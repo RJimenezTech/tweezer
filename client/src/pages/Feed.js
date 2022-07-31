@@ -1,5 +1,6 @@
 import React from "react";
 
+import Settings from "../components/Settings";
 import HomeTweet from "../components/HomeTweet";
 import SingleTweet from "../components/SingleTweet";
 import Nav from "../components/Nav";
@@ -15,10 +16,7 @@ function Feed() {
             <Nav></Nav>
           </div>
           <div className="col-4 border center-feed">
-            <HomeTweet/>
-            <SingleTweet/>
-            <SingleTweet/>
-            <SingleTweet/>
+            <Settings></Settings>
           </div>
           <div className="col-4"></div>
         </div>
