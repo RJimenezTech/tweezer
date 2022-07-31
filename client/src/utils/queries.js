@@ -3,11 +3,12 @@ import { gql } from '@apollo/client';
 // Get all tweets from a single user
 // Requires a username as variable to query
 export const QUERY_ALL_TWEETS = gql`
-  query Tweet($username: String) {
+  query Tweets($username: String) {
     tweets(username: $username) {
       _id
       text
       userId
+      username
       retweetCount
       likesCount
       replyCount
@@ -58,22 +59,22 @@ export const QUERY_ONE_TWEET = gql`
 `;
 
 
-export const QUERY_ALL_USERS = gql`
-  query allUsers {
-    users {
-      _id
-      name
-      username
-      email
-      description
-      url
-      isPublic
-      followingCount
-      followerCount
-      tweetCount
-      notificationCount
-  }
-`;
+// export const QUERY_ALL_USERS = gql`
+//   query allUsers {
+//     users {
+//       _id
+//       name
+//       username
+//       email
+//       description
+//       url
+//       isPublic
+//       followingCount
+//       followerCount
+//       tweetCount
+//       notificationCount
+//   }
+// `;
 
 // Requires a username as variable for query
 export const QUERY_ONE_USER = gql`

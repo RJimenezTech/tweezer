@@ -1,9 +1,17 @@
 import React from "react";
+import SingleTweet from "../SingleTweet"
+
+import { useQuery } from "@apollo/client";
+import { QUERY_ALL_TWEETS } from "../../utils/queries";
 
 import defaultPFP from "../../assets/images/default-pfp.jpg";
 
 function HomeTweet(tab) {
+  const { data } = useQuery(QUERY_ALL_TWEETS);
+  // const { data: userData } = useQuery(QUERY_ME_BASIC);
+  const tweets = data?.tweets || [];
   return (
+    <>
       <div className="row mx-2 border-bottom">
         <header className="text-dark fs-5 fw-bold bg-light home-header">
           <p className="p-3 header-text">Home</p>
@@ -39,6 +47,8 @@ function HomeTweet(tab) {
           </div>
         </div>
       </div>
+      <SingleTweet tweets={tweets} />
+    </>
     );
 }
 
