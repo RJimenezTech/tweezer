@@ -119,7 +119,7 @@ export const QUERY_ONE_USER = gql`
 // I tried to query as much as possible here. 
 // There is a slightly shorter QUERY_ME_BASIC below 
 export const QUERY_ME_ALL = gql`
-query ME {
+query Me {
   me {
     _id
     name

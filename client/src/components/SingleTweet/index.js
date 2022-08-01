@@ -4,9 +4,9 @@ import defaultPFP from "../../assets/images/default-pfp.jpg";
 
 
 function SingleTweet({ tweets }) {
-  if (!tweets.length) {
-    return <h5>No tweets yet!</h5>
-  }
+  // if (!tweets) {
+  //   return <h5>No tweets yet!</h5>
+  // }
   return (
     <>
       {tweets &&
