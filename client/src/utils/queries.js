@@ -93,11 +93,15 @@ export const QUERY_ONE_USER = gql`
       followingCount
       notifications {
         _id
-        text
       }
       tweets {
         _id
         text
+        username
+        createdAt
+        replyCount
+        retweetCount
+        likesCount
       }
       likes {
         likesCount
