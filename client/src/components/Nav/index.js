@@ -5,11 +5,6 @@ import tweezer from "../../assets/images/tweezer.svg";
 
 function Nav(props) {
     const {modalIsTweet, modalType, tweetId, show, handleShow} = props;
-    // const handleChange = (event) => {
-    //   if (event.target.value.length <= 280) {
-    //     setFormState(event.target.value);
-    //   }
-    // };
 
     const [toggleState, setToggleState] = useState(1);
 

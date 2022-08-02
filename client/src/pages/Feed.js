@@ -1,4 +1,4 @@
-import { React, useState, useEffect } from "react";
+import { React, useState } from "react";
 
 import Nav from "../components/Nav";
 import HomeTweet from "../components/HomeTweet";
@@ -47,7 +47,6 @@ function Feed() {
           </div>
           <div className="col-4 border center-feed">
             {currentTab === 1 && <HomeTweet 
-            passData={passData} 
             show={show}
             handleShow={handleShow}
             modalType={modalType} 
@@ -58,7 +57,12 @@ function Feed() {
             {currentTab === 4 && <Messages />}
             {currentTab === 5 && <Bookmarks />}
             {currentTab === 6 && <Lists />}
-            {currentTab === 7 && <Profile />}
+            {currentTab === 7 && <Profile
+            show={show}
+            handleShow={handleShow}
+            modalType={modalType} 
+            modalIsReply={modalIsReply} 
+            modalIsTweet={modalIsTweet} />}
             {currentTab === 8 && <Settings />}
           </div>
           <div className="col-4"></div>

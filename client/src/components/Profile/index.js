@@ -1,5 +1,6 @@
-import React from "react";
+import React, {useState} from "react";
 // import { Navigate, useParams} from "react-router-dom"
+import TweetModal from '../../components/TweetModal';
 import { useQuery } from "@apollo/client";
 import Auth from "../../utils/auth";
 
@@ -8,8 +9,9 @@ import { QUERY_ONE_USER} from "../../utils/queries";
 import defaultPFP from "../../assets/images/default-pfp.jpg";
 import SingleTweet from '../SingleTweet';
 
-const Profile = (tab) => {
-  // const dummyName = "CedrickSporer.Reynolds93"
+const Profile = (props) => {
+  const {modalType, modalIsTweet, modalIsReply, show, handleShow} = props;
+  const [thisTweetId, setTweetId] = useState("");
   const myUsername = Auth.getProfile().data.username;
   const { data } = useQuery(QUERY_ONE_USER, {
     variables: { username: myUsername },
@@ -51,7 +53,8 @@ const Profile = (tab) => {
           </div>
         </div>
       </div>
-      <SingleTweet tweets={user.tweets} />
+      <SingleTweet tweets={user.tweets} show={show} handleShow={handleShow} modalType={modalType} modalIsReply={modalIsReply} setTweetId={setTweetId} thisTweetId={thisTweetId}/>
+      <TweetModal show={show} handleShow={handleShow} modalType={modalType} modalIsTweet={modalIsTweet} thisTweetId={thisTweetId}/>
     </>
   );
 };

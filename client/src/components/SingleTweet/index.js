@@ -1,22 +1,23 @@
 import React, {useState}from "react";
 
 import Auth from "../../utils/auth";
-import {useMutation} from '@apollo/client';
+import {useMutation, useQuery} from '@apollo/client';
 import {LIKE_TWEET} from '../../utils/mutations';
+import { QUERY_ONE_USER} from '../../utils/queries';
 import defaultPFP from "../../assets/images/default-pfp.jpg";
 
 function SingleTweet(props) {
   const {thisTweetId, tweets, setTweetId, modalIsReply, handleShow} = props;
   const myUserId = Auth.getProfile().data._id;
+  const myUsername = Auth.getProfile().data.username;
   const [like, setLike] = useState(false)
-  // const [text, setFormState] = useState("");
+  
+  const {data} = useQuery(QUERY_ONE_USER, 
+    {
+      variables: {username: myUsername}
+    });
+  console.log(data)
   const [likeTweet] = useMutation(LIKE_TWEET);
-
-  // const handleChange = (event) => {
-  //   if (event.target.value.length <= 280) {
-  //     setFormState(event.target.value);
-  //   }
-  // };
 
   // const handleLikeColor = (tweetId) => {
   //   const isLiked = myLikes.map((tweet) => tweet._id).includes(tweetId)

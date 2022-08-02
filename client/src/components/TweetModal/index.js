@@ -6,7 +6,6 @@ import Form from 'react-bootstrap/Form';
 import Auth from "../../utils/auth";
 import {useMutation} from '@apollo/client';
 import {REPLY_TWEET, ADD_TWEET} from '../../utils/mutations';
-// import {QUERY_ONE_USER} from '../../utils/queries';
 import defaultPFP from "../../assets/images/default-pfp.jpg";
 
 
@@ -15,12 +14,16 @@ function TweetModal(props) {
     const myUsername = Auth.getProfile().data.username;
     const { thisTweetId, show, handleShow, modalType} = props;
     const [text, setFormState] = useState("");
-    const [addTweet] = useMutation(ADD_TWEET,{
-        variables: {userId: myUserId, text: text}
-    });
-    const [reply] = useMutation(REPLY_TWEET, {
-        variables: {userId: myUserId, text: text, tweetId: thisTweetId}
-    });
+    const [addTweet] = useMutation(ADD_TWEET
+    //   ,{
+    //     variables: {userId: myUserId, text: text}
+    // }
+    );
+    const [reply] = useMutation(REPLY_TWEET
+    //   , {
+    //     variables: {userId: myUserId, text: text, tweetId: thisTweetId}
+    // }
+    );
 
     const handleChange = (event) => {
         if (event.target.value.length <= 280) {
@@ -36,13 +39,14 @@ function TweetModal(props) {
             await addTweet({
             variables: {userId: myUserId, text: text, username: myUsername}
             });
+            setFormState("")
           } else {
             await reply({
             variables: {userId: myUserId, text: text, tweetId: thisTweetId}
-            })
+            });
+            setFormState("");
           }
 
-          setFormState("");
         } catch (e) {
           console.error(e);
         }
