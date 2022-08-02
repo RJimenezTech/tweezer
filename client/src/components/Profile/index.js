@@ -50,18 +50,6 @@ const Profile = (tab) => {
             <p className="my-0"><span className="option fw-semibold">{user.followerCount}</span> Followers</p>
           </div>
         </div>
-        {/* <div className="col-12">
-          <img
-            src={defaultPFP}
-            className="rounded-circle img-fluid"
-            alt="default avatar"></img>
-        </div>
-        <div className="col-10">
-          <p className="mx-2 my-0">{user.name}</p>
-          <p className="mx-2 my-0">{user.username}</p>
-          <p className="mx-2 my-0">{user.description}</p>
-          <p className="mx-2 my-0">{user.url}</p>
-        </div> */}
       </div>
       <SingleTweet tweets={user.tweets} />
     </>
