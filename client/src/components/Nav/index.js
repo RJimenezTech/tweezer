@@ -1,7 +1,5 @@
 import React, {useState} from 'react';
-import Modal from 'react-bootstrap/Modal';
-import Button from 'react-bootstrap/Button';
-import Form from 'react-bootstrap/Form';
+import {Modal, Button} from 'react-bootstrap';
 
 // import {useMutation} from '@apollo/client';
 
@@ -75,49 +73,48 @@ function Nav(props) {
 
         <Modal show={show} onHide={()=>handleShow()}>
         <Modal.Header closeButton>
-            <Modal.Title>Create Tweet</Modal.Title>
+            <Modal.Title>Tweet</Modal.Title>
         </Modal.Header>
             <Modal.Body>
-            <Form>
-              <div className="col-2">
-                  <img
-                  src={defaultPFP}
-                  className="rounded-circle img-fluid"
-                  alt="default avatar"
-                  ></img>
-              </div>
-              <div className="col-10">
+              <div className='row mx-2'>
+                <div className="col-2">
+                    <img
+                    src={defaultPFP}
+                    className="rounded-circle img-fluid"
+                    alt="default avatar"
+                    ></img>
+                </div>
+                <div className="col-10">
 
-                  <div className="border-bottom">
-                      <textarea
-                          id="tweet-input"
-                          placeholder="What's going on?"
-                          className="fs-5 bg-light border border-0 w-100"
-                          maxLength="240"
-                      ></textarea>
-                  </div>
-                  <div className="d-flex flex-row align-items-center justify-content-between">
-                      <div className="fs-4">
-                          <i className="bi bi-image mx-1 option"></i>
-                          <i className="bi bi-filetype-gif mx-1 option"></i>
-                          <i className="bi bi-clipboard-data mx-1 option"></i>
-                          <i className="bi bi-emoji-kiss mx-1 option"></i>
-                          <i className="bi bi-calendar mx-1 option"></i>
-                          <i className="bi bi-geo-alt mx-1 option"></i>
-                      </div>
-                  </div>
+                    <div className="border-bottom">
+                        <textarea
+                            id="tweet-input"
+                            placeholder="What's going on?"
+                            className="fs-5 bg-light border border-0 w-100 overflow-visible"
+                            maxLength="240"
+                        ></textarea>
+                    </div>
+                    <div className="d-flex flex-row align-items-center justify-content-between">
+                        <div className="fs-4">
+                            <i className="bi bi-image mx-1 option"></i>
+                            <i className="bi bi-filetype-gif mx-1 option"></i>
+                            <i className="bi bi-clipboard-data mx-1 option"></i>
+                            <i className="bi bi-emoji-kiss mx-1 option"></i>
+                            <i className="bi bi-calendar mx-1 option"></i>
+                            <i className="bi bi-geo-alt mx-1 option"></i>
+                        </div>
+                    </div>
+                </div>
               </div>
-            </Form>
         </Modal.Body>
         <Modal.Footer>
-            <Button className="my-4 w-25 rounded-pill btn text-light fw-bold primary btn-md"
-            variant="secondary" 
+            <Button className="my-4 w-25 rounded-pill btn border-0 text-light fw-bold primary btn-md"
+             
             onClick={()=> {handleShow();handleFormSubmit()}}
             >
             Close
             </Button>
-            <Button className="my-4 w-25 rounded-pill btn text-light fw-bold primary btn-md"
-            variant="primary" 
+            <Button className="my-4 w-25 rounded-pill btn border-0 text-light fw-bold primary btn-md"
             onClick={()=> {handleShow();handleFormSubmit()}}
             >
             Tweet
