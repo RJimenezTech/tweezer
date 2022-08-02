@@ -100,3 +100,18 @@ export const SHARE_TWEET = gql`
     }
   }
 `;
+export const REPLY_TWEET = gql`
+  mutation Replytweet($userId: String!, $text: String!, $tweetId: String!) {
+    reply(userId: $userId, text: $text, tweetId: $tweetId) {
+      _id
+      text
+      userId
+      retweets {
+        _id
+        name
+        username
+      }
+      retweetCount
+    }
+  }
+`;

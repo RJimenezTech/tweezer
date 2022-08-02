@@ -17,7 +17,7 @@ function Nav(props) {
     const myUsername = Auth.getProfile().data.username;
     const [text, setFormState] = useState("");
 
-    const [addTweet, { error }] = useMutation(ADD_TWEET, {
+    const [addTweet] = useMutation(ADD_TWEET, {
       update(cache, { data: { addTweet } }) {
         
           // could potentially not exist yet, so wrap in a try/catch
@@ -32,7 +32,7 @@ function Nav(props) {
           console.warn("First thought insertion by user!")
         }
   
-        // update thought array's cache
+        // update tweet array's cache
         const { tweets } = cache.readQuery({ query: QUERY_ALL_TWEETS });
         cache.writeQuery({
           query: QUERY_ALL_TWEETS,
@@ -77,8 +77,6 @@ function Nav(props) {
       }
     };
 
-
-    
     return (
       <>
       <div className="fs-3">
@@ -120,7 +118,7 @@ function Nav(props) {
         </button>
       </div>
       
-      <Modal dialogClassName="my-modal" show={show} onHide={()=>handleShow()}>
+      <Modal show={show} onHide={()=>handleShow()}>
         <Modal.Header closeButton>
             <Modal.Title>Create Tweet</Modal.Title>
         </Modal.Header>

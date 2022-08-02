@@ -1,9 +1,52 @@
-import React from "react";
+import React, {useState}from "react";
+import Modal from 'react-bootstrap/Modal';
+import Button from 'react-bootstrap/Button';
+import Form from 'react-bootstrap/Form';
 
+import Auth from "../../utils/auth";
+import {useMutation} from '@apollo/client';
+import {REPLY_TWEET} from '../../utils/mutations';
 import defaultPFP from "../../assets/images/default-pfp.jpg";
 
-
 function SingleTweet({ tweets }) {
+  const myUserId = Auth.getProfile().data._id;
+
+  const [text, setFormState] = useState("");
+  const [tweetId, setTweetId] = useState("");
+  const [replyTweet] = useMutation(REPLY_TWEET);
+  // modal logic
+  const [show, setShow] = useState(false);
+  const handleShow = () => {
+    if (show === false) {
+      setShow(true)
+      console.log("show")
+    } else {
+      setShow(false);
+      console.log("not show");
+    }
+  };
+
+  const handleChange = (event) => {
+    if (event.target.value.length <= 280) {
+      setFormState(event.target.value);
+    }
+  };
+
+  const handleFormSubmit = async (event) => {
+    console.log(myUserId, text, tweetId);
+    try {
+      await replyTweet({
+      variables: {userId: myUserId, text: text, tweetId: tweetId}
+      });
+      setFormState("");
+      setTweetId("");
+    } catch (e) {
+      console.error(e);
+    }
+    
+  };
+
+
   // if (!tweets) {
   //   return <h5>No tweets yet!</h5>
   // }
@@ -39,7 +82,7 @@ function SingleTweet({ tweets }) {
                   <p className="mx-2 my-0">{tweet.createdAt}</p>
                 </div>
                 <div className="d-flex text-secondary py-2 border-bottom">
-                  <p className="mx-2 my-0">{tweet.replyCount} Replies</p>
+                  <p className="mx-2 my-0" onClick={()=>{handleShow();setTweetId(tweet._id)}}>{tweet.replyCount} Replies</p>
                   <p className="mx-2 my-0">{tweet.retweetCount} Retweets</p>
                   <p className="mx-2 my-0">{tweet.likesCount} Likes</p>
                 </div>
@@ -49,20 +92,58 @@ function SingleTweet({ tweets }) {
                   <i className="bi bi-heart mx-1 option"></i>
                   <i className="bi bi-share mx-1 option"></i>
                 </div>
-                <div className="d-flex flex-row align-items-center justify-content-between">
-                  <textarea
-                    id="tweet-input"
-                    placeholder="Reply to this tweet..."
-                    className="bg-light border border-0 w-100"
-                    maxLength="240"></textarea>
-                  <button className="my-4 w-25 rounded-pill btn text-light fw-bold primary btn-md">
-                    Reply
-                  </button>
-                </div>
               </div>
             </div>
           </div>
         ))}
+        <Modal show={show} onHide={()=>handleShow()}>
+        <Modal.Header closeButton>
+            <Modal.Title>Create Tweet</Modal.Title>
+        </Modal.Header>
+        <Form onSubmit={handleFormSubmit}>
+            <Modal.Body>
+                <div className="row mx-2">
+                  <div className="col-2">
+                      <img
+                      src={defaultPFP}
+                      className="rounded-circle img-fluid"
+                      alt="default avatar"
+                      ></img>
+                  </div>
+                  <div className="col-10">
+                      <div>
+                          <textarea
+                              value={text}
+                              id="tweet-input"
+                              rows="7"
+                              placeholder="What's going on?"
+                              className="fs-5 bg-light border border-0 w-100 h-250"
+                              maxLength="240"
+                              onChange={handleChange}
+                          ></textarea>
+                      </div>
+                  </div>
+                </div>
+            </Modal.Body>
+        <Modal.Footer className="d-flex">
+            <div className="d-flex flex-row align-items-center justify-content-between pl-3">
+              <div className="fs-4">
+                  <i className="bi bi-image mx-1 option"></i>
+                  <i className="bi bi-filetype-gif mx-1 option"></i>
+                  <i className="bi bi-clipboard-data mx-1 option"></i>
+                  <i className="bi bi-emoji-kiss mx-1 option"></i>
+                  <i className="bi bi-calendar mx-1 option"></i>
+                  <i className="bi bi-geo-alt mx-1 option"></i>
+              </div>
+            </div>
+            <Button className="my-2 w-25 rounded-pill btn text-light fw-bold primary btn-md"
+              onClick={()=> {handleShow();handleFormSubmit()}}
+            >
+            Reply
+            </Button>
+        </Modal.Footer>
+        </Form>
+        </Modal>
     </>
   );
 }
