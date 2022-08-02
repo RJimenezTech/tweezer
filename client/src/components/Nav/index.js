@@ -1,6 +1,12 @@
-import { React, useState } from 'react';
+import React, {useState} from 'react';
+import Modal from 'react-bootstrap/Modal';
+import Button from 'react-bootstrap/Button';
+import Form from 'react-bootstrap/Form';
+
+// import {useMutation} from '@apollo/client';
 
 import tweezer from "../../assets/images/tweezer.svg";
+import defaultPFP from "../../assets/images/default-pfp.jpg";
 
 function Nav(props) {
 
@@ -12,7 +18,23 @@ function Nav(props) {
         props.passData(i);
     }
 
+      // modal logic
+    const [show, setShow] = useState(false);
+    const handleShow = () => {
+      if (show === false) {
+        setShow(true)
+      } else {
+        setShow(false);
+      }
+    };
+
+    const handleFormSubmit = () => {
+      // submit useMutation: addTweet
+      return true;
+  };
+    
     return (
+      <>
       <div className="fs-3">
         <img src={tweezer} alt="tweezer logo" className="logo my-3" />
         <div onClick={() => toggleTab(1)} className={ toggleState === 1 ? "active d-flex flex-row my-2" : "option d-flex flex-row my-2"}>
@@ -47,10 +69,63 @@ function Nav(props) {
           <i className={toggleState === 8 ? "bi bi-gear-fill mx-2" : "bi bi-gear mx-2"}></i>
           <p className="my-auto w-100 mx-3">Settings</p>
         </div>
-        <button className="my-4 w-100 rounded-pill btn text-light fw-bold primary btn-lg">
+        <button onClick={()=>handleShow()} className="my-4 w-100 rounded-pill btn text-light fw-bold primary btn-lg">
           Tweet
         </button>
+
+        <Modal show={show} onHide={()=>handleShow()}>
+        <Modal.Header closeButton>
+            <Modal.Title>Create Tweet</Modal.Title>
+        </Modal.Header>
+            <Modal.Body>
+            <Form>
+              <div className="col-2">
+                  <img
+                  src={defaultPFP}
+                  className="rounded-circle img-fluid"
+                  alt="default avatar"
+                  ></img>
+              </div>
+              <div className="col-10">
+
+                  <div className="border-bottom">
+                      <textarea
+                          id="tweet-input"
+                          placeholder="What's going on?"
+                          className="fs-5 bg-light border border-0 w-100"
+                          maxLength="240"
+                      ></textarea>
+                  </div>
+                  <div className="d-flex flex-row align-items-center justify-content-between">
+                      <div className="fs-4">
+                          <i className="bi bi-image mx-1 option"></i>
+                          <i className="bi bi-filetype-gif mx-1 option"></i>
+                          <i className="bi bi-clipboard-data mx-1 option"></i>
+                          <i className="bi bi-emoji-kiss mx-1 option"></i>
+                          <i className="bi bi-calendar mx-1 option"></i>
+                          <i className="bi bi-geo-alt mx-1 option"></i>
+                      </div>
+                  </div>
+              </div>
+            </Form>
+        </Modal.Body>
+        <Modal.Footer>
+            <Button className="my-4 w-25 rounded-pill btn text-light fw-bold primary btn-md"
+            variant="secondary" 
+            onClick={()=> {handleShow();handleFormSubmit()}}
+            >
+            Close
+            </Button>
+            <Button className="my-4 w-25 rounded-pill btn text-light fw-bold primary btn-md"
+            variant="primary" 
+            onClick={()=> {handleShow();handleFormSubmit()}}
+            >
+            Tweet
+            </Button>
+        </Modal.Footer>
+        </Modal>
       </div>
+      </>
     );
 }
 
