@@ -1,4 +1,4 @@
-import{ React, useState } from "react";
+import { React, useState, useEffect } from "react";
 
 import Nav from "../components/Nav";
 import HomeTweet from "../components/HomeTweet";
@@ -19,7 +19,6 @@ function Feed() {
   const passData = (currentTab) => {
     setCurrentTab(currentTab);
   };
-
   return (
     <main>
       {loggedIn ? (
