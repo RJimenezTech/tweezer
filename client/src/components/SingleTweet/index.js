@@ -4,13 +4,22 @@ import Button from 'react-bootstrap/Button';
 import Form from 'react-bootstrap/Form';
 
 import Auth from "../../utils/auth";
-import {useMutation} from '@apollo/client';
+import {useMutation, useQuery} from '@apollo/client';
 import {REPLY_TWEET, LIKE_TWEET} from '../../utils/mutations';
+import {QUERY_ONE_USER} from '../../utils/queries';
 import defaultPFP from "../../assets/images/default-pfp.jpg";
 
 function SingleTweet({ tweets }) {
   const myUserId = Auth.getProfile().data._id;
-  const [like, setLike] = useState(false)
+  const myUsername = Auth.getProfile().data.username;
+  // const {data} = useQuery(QUERY_ONE_USER, {
+  //   variables: {username: myUsername}
+  // });
+  // console.log(data)
+  // console.log(data.user.likes)
+  // const myLikes = data.user.likes;
+  // console.log(myLikes)
+  const [like, setLike] = useState(false);
   const [text, setFormState] = useState("");
   const [tweetId, setTweetId] = useState("");
   const [replyTweet] = useMutation(REPLY_TWEET);
@@ -33,19 +42,20 @@ function SingleTweet({ tweets }) {
     }
   };
 
-  const handleLikeColor = () => {
-    if (like === false) {
-      setLike(true);
-    } else {
-      setLike(false);
-    }
-  }
+  // const handleLikeColor = (tweetId) => {
+  //   const isLiked = myLikes.map((tweet) => tweet._id).includes(tweetId)
+    
+  //   if (isLiked) {
+  //     return true;
+  //   } else return false;
+  // }
+
   const handleLike = async (event) => {
     try {
       await likeTweet({
         variables: {userId: myUserId, tweetId: tweetId}
       })
-      handleLikeColor();
+      // handleLikeColor();
     } catch (e) {
       console.error(e);
     }
@@ -64,8 +74,6 @@ function SingleTweet({ tweets }) {
     }
     
   };
-
-
   // if (!tweets) {
   //   return <h5>No tweets yet!</h5>
   // }
@@ -108,9 +116,9 @@ function SingleTweet({ tweets }) {
                 <div className="d-flex text-secondary justify-content-around py-2 fs-4 border-bottom">
                   <i className="bi bi-reply mx-1 option" onClick={()=>{handleShow();setTweetId(tweet._id)}}></i>
                   <i className="bi bi-arrow-repeat mx-1 option"></i>
-                  {like ? <i className="bi bi-heart-fill mx-1 option" onClick={()=>{handleLike()}}></i> 
-                  : <i className="bi bi-heart mx-1 option" onClick={()=>{handleLike()}}></i>}
-                  
+                  {/*handleLikeColor(tweet._id) ? <i className="bi bi-heart-fill mx-1 option" onClick={()=>{handleLike();setTweetId(tweet._id)}}></i> 
+                  : <i className="bi bi-heart mx-1 option" onClick={()=>{handleLike();setTweetId(tweet._id)}}></i>*/}
+                  <i className="bi bi-heart mx-1 option"></i>
                   <i className="bi bi-share mx-1 option"></i>
                 </div>
               </div>
