@@ -23,9 +23,11 @@ const Profile = (tab) => {
   const [update, { error }] = useMutation(UPDATE_USER_PROFILE);
 
   const [formState, setFormState] = useState({
-    display_name: "",
+    name: "",
     description: "",
     url: "",
+    username: myUsername,
+    userId: myId,
   });
 
   const handleChange = (event) => {
@@ -52,8 +54,7 @@ const Profile = (tab) => {
 
     try {
       const { data } = await update({
-        variables: { ...formState },
-        userId: myId
+        variables: { ...formState }
       });
     } catch (e) {
       console.error(e);
@@ -63,9 +64,11 @@ const Profile = (tab) => {
 
     // clear form values
     setFormState({
-      display_name: "",
+      name: "",
       description: "",
       url: "",
+      username: myUsername,
+      userId: myId,
     });
   };
 
@@ -136,10 +139,10 @@ const Profile = (tab) => {
                   <input
                     className="rounded-pill form-input form-control mb-3"
                     placeholder="Display name..."
-                    name="display_name"
-                    type="display_name"
-                    id="display_name"
-                    value={formState.display_name}
+                    name="name"
+                    type="name"
+                    id="name"
+                    value={formState.name}
                     onChange={handleChange}
                   />
                   <textarea
