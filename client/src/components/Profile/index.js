@@ -4,7 +4,8 @@ import TweetModal from '../../components/TweetModal';
 import { useQuery } from "@apollo/client";
 import Auth from "../../utils/auth";
 
-import { QUERY_ONE_USER} from "../../utils/queries";
+import { QUERY_ONE_USER } from "../../utils/queries";
+import { UPDATE_USER_PROFILE } from "../../utils/mutations";
 
 import defaultPFP from "../../assets/images/default-pfp.jpg";
 import SingleTweet from '../SingleTweet';
@@ -13,12 +14,64 @@ const Profile = (props) => {
   const {modalType, modalIsTweet, modalIsReply, show, handleShow} = props;
   const [thisTweetId, setTweetId] = useState("");
   const myUsername = Auth.getProfile().data.username;
+  const myId = Auth.getProfile().data._id;
   const { data } = useQuery(QUERY_ONE_USER, {
     variables: { username: myUsername },
   });
 
   const user = data?.user || {};
+
+  const [update, { error }] = useMutation(UPDATE_USER_PROFILE);
+
+  const [formState, setFormState] = useState({
+    name: "",
+    description: "",
+    url: "",
+    username: myUsername,
+    userId: myId,
+  });
+
+  const handleChange = (event) => {
+    const { name, value } = event.target;
+
+    setFormState({
+      ...formState,
+      [name]: value,
+    });
+  };
+
+  // const [show, setShow] = useState(false);
+  // const handleShow = () => {
+  //   if (show === false) {
+  //     setShow(true);
+  //     console.log("show");
+  //   } else {
+  //     setShow(false);
+  //     console.log("not show");
+  //   }
+  // };
   
+  const handleFormSubmit = async (event) => {
+
+    try {
+      const { data } = await update({
+        variables: { ...formState }
+      });
+    } catch (e) {
+      console.error(e);
+    }
+
+    console.log(data);
+
+    // clear form values
+    setFormState({
+      name: "",
+      description: "",
+      url: "",
+      username: myUsername,
+      userId: myId,
+    });
+  };
 
   return (
     <>
@@ -33,7 +86,10 @@ const Profile = (props) => {
               className="rounded-circle img-fluid h-50"
               alt="default avatar"
             ></img>
-            <button className="rounded-pill btn btn-md text-light fw-bold primary">
+            <button
+              onClick={() => handleShow()}
+              className="rounded-pill btn btn-md text-light fw-bold primary"
+            >
               Edit Profile
             </button>
           </div>
@@ -45,11 +101,22 @@ const Profile = (props) => {
             <p className="my-0">{user.description}</p>
           </div>
           <div className="mb-3">
-            <a className="my-0 text-info text-decoration-none option" href={user.url }>{user.url}</a>
+            <a
+              className="my-0 text-info text-decoration-none option"
+              href={user.url}
+            >
+              {user.url}
+            </a>
           </div>
           <div className="d-flex mb-3">
-            <p className="my-0 me-3"><span className="option fw-semibold">{user.followingCount}</span> Following</p>
-            <p className="my-0"><span className="option fw-semibold">{user.followerCount}</span> Followers</p>
+            <p className="my-0 me-3">
+              <span className="option fw-semibold">{user.followingCount}</span>{" "}
+              Following
+            </p>
+            <p className="my-0">
+              <span className="option fw-semibold">{user.followerCount}</span>{" "}
+              Followers
+            </p>
           </div>
         </div>
       </div>

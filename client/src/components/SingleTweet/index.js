@@ -73,16 +73,16 @@ function SingleTweet(props) {
                   <p className="mx-2 my-0">{tweet.createdAt}</p>
                 </div>
                 <div className="d-flex text-secondary py-2 border-bottom">
-                  <p className="mx-2 my-0" >{tweet.replyCount} Replies</p>
-                  <p className="mx-2 my-0">{tweet.retweetCount} Retweets</p>
-                  <p className="mx-2 my-0">{tweet.likesCount} Likes</p>
+                  <p className="mx-2 my-0" ><span className="option fw-semibold">{tweet.replyCount}</span> Replies</p>
+                  <p className="mx-2 my-0"><span className="option fw-semibold">{tweet.retweetCount}</span> Retweets</p>
+                  <p className="mx-2 my-0"><span className="option fw-semibold">{tweet.likesCount}</span> Likes</p>
                 </div>
                 <div className="d-flex text-secondary justify-content-around py-2 fs-4 border-bottom">
                   <i className="bi bi-reply mx-1 option" onClick={()=>{handleShow();setTweetId(tweet._id);modalIsReply()}}></i>
                   <i className="bi bi-arrow-repeat mx-1 option"></i>
-                  {/*handleLikeColor(tweet._id) ? <i className="bi bi-heart-fill mx-1 option" onClick={()=>{handleLike();setTweetId(tweet._id)}}></i> 
-                  : <i className="bi bi-heart mx-1 option" onClick={()=>{handleLike();setTweetId(tweet._id)}}></i>*/}
-                  <i className="bi bi-heart mx-1 option"></i>
+                  {/*handleLikeColor(tweet._id) ? <i className="bi bi-heart-fill mx-1 active" onClick={()=>{handleLike();setTweetId(tweet._id)}}></i> 
+                  :*/} <i className="bi bi-heart mx-1 option" onClick={()=>{handleLike();setTweetId(tweet._id)}}></i>
+                  {/* <i className="bi bi-heart mx-1 option"></i> */}
                   <i className="bi bi-share mx-1 option"></i>
                 </div>
               </div>
