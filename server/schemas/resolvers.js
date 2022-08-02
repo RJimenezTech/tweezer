@@ -31,7 +31,7 @@ const resolvers = {
     user: async (parent, { username }) => {
       return User.findOne({ username })
         .select("-__v -password")
-        .populate("tweets")
+        .populate({path: 'tweets', options:{sort:{'createdAt':-1}}})
         .populate("followers")
         .populate("following")
         .populate("notifications")

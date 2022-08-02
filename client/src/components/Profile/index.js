@@ -1,7 +1,5 @@
 import React, {useState} from "react";
-// import { Navigate, useParams} from "react-router-dom"
-import TweetModal from '../../components/TweetModal';
-import { Modal, Form, Button } from "react-bootstrap";
+import { Modal, Button } from "react-bootstrap";
 import { useQuery, useMutation } from "@apollo/client";
 import Auth from "../../utils/auth";
 
@@ -12,7 +10,7 @@ import defaultPFP from "../../assets/images/default-pfp.jpg";
 import SingleTweet from '../SingleTweet';
 
 const Profile = (props) => {
-  const {modalType, modalIsTweet, modalIsReply, show, handleShow} = props;
+  const {modalType, modalIsReply, show, handleShow} = props;
   const [thisTweetId, setTweetId] = useState("");
   const myUsername = Auth.getProfile().data.username;
   const myId = Auth.getProfile().data._id;
@@ -21,10 +19,18 @@ const Profile = (props) => {
   });
 
   const user = data?.user || {};
+  const [profileState, setProfileState] = useState({
+    username: myUsername, 
+    url: user.url,
+    description: user.description,
+    name: user.name,
+    tweets: user.tweets,
+    followerCount: user.followerCount,
+    followingCount: user.followingCount
+  })
 
   const [update, { error }] = useMutation(UPDATE_USER_PROFILE);
 
-  
   const [showEdit, setShowEdit] = useState(false);
   const handleShowEdit = () => {
     if (showEdit === false) {
@@ -50,6 +56,7 @@ const Profile = (props) => {
       ...formState,
       [name]: value,
     });
+
   };
 
   // const [show, setShow] = useState(false);
@@ -65,6 +72,14 @@ const Profile = (props) => {
   
   const handleFormSubmit = async () => {
 
+    setProfileState({
+      name: formState.name,
+      url: formState.url,
+      description: formState.description,
+      username: myUsername,
+      tweets: user.tweets
+    })
+    console.log(profileState)
     try {
       const { data } = await update({
         variables: { ...formState }
@@ -72,7 +87,6 @@ const Profile = (props) => {
     } catch (e) {
       console.error(e);
     }
-
     console.log(formState);
 
 
@@ -84,7 +98,8 @@ const Profile = (props) => {
       userId: myId
     });
   };
-
+  
+  
   return (
     <>
       <div className="row mx-2 border-bottom">
@@ -104,33 +119,33 @@ const Profile = (props) => {
             </button>
           </div>
           <div className="">
-            <p className="my-0 fw-bold fs-5">{user.name}</p>
-            <p className="my-0 text-secondary option">@{user.username}</p>
+            <p className="my-0 fw-bold fs-5">{profileState.name}</p>
+            <p className="my-0 text-secondary option">@{profileState.username}</p>
           </div>
           <div className="my-3">
-            <p className="my-0">{user.description}</p>
+            <p className="my-0">{profileState.description}</p>
           </div>
           <div className="mb-3">
             <a
               className="my-0 text-decoration-none option"
-              href={user.url}>
-              {user.url}
+              href={profileState.url}>
+              {profileState.url}
             </a>
           </div>
           <div className="d-flex mb-3">
             <p className="my-0 me-3">
-              <span className="option fw-semibold">{user.followingCount}</span>{" "}
+              <span className="option fw-semibold">{profileState.followingCount}</span>{" "}
               Following
             </p>
             <p className="my-0">
-              <span className="option fw-semibold">{user.followerCount}</span>{" "}
+              <span className="option fw-semibold">{profileState.followerCount}</span>{" "}
               Followers
             </p>
           </div>
         </div>
       </div>
       <SingleTweet
-        tweets={user.tweets}
+        tweets={profileState.tweets}
         show={show}
         handleShow={handleShow}
         modalType={modalType}
@@ -138,7 +153,7 @@ const Profile = (props) => {
         setTweetId={setTweetId}
         thisTweetId={thisTweetId}
       />
-      <Modal show={showEdit} onHide={() => handleShowEdit()}>
+      <Modal show={showEdit} onHide={() =>{handleShowEdit()}}>
         <Modal.Header className="bg-light" closeButton>
           <Modal.Title>Profile Edit</Modal.Title>
         </Modal.Header>
