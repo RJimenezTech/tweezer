@@ -10,24 +10,15 @@ import defaultPFP from "../../assets/images/default-pfp.jpg";
 import SingleTweet from '../SingleTweet';
 
 const Profile = (props) => {
-  const {modalType, modalIsReply, show, handleShow} = props;
+  const {modalType, modalIsReply, show, handleShow, data} = props;
+  const {user} = data;
+  console.log(user);
+  console.log(user.tweets);
   const [thisTweetId, setTweetId] = useState("");
-  const myUsername = Auth.getProfile().data.username;
-  const myId = Auth.getProfile().data._id;
-  const { data } = useQuery(QUERY_ONE_USER, {
-    variables: { username: myUsername },
-  });
-
-  const user = data?.user || {};
-  const [profileState, setProfileState] = useState({
-    username: myUsername, 
-    url: user.url,
-    description: user.description,
-    name: user.name,
-    tweets: user.tweets,
-    followerCount: user.followerCount,
-    followingCount: user.followingCount
-  })
+  console.log(user);
+  const myId = user._id;
+  
+  const [userData, setUserData] = useState(data);
 
   const [update, { error }] = useMutation(UPDATE_USER_PROFILE);
 
@@ -56,6 +47,7 @@ const Profile = (props) => {
       ...formState,
       [name]: value,
     });
+    setUserData(data);
 
   };
 
@@ -72,14 +64,7 @@ const Profile = (props) => {
   
   const handleFormSubmit = async () => {
 
-    setProfileState({
-      name: formState.name,
-      url: formState.url,
-      description: formState.description,
-      username: myUsername,
-      tweets: user.tweets
-    })
-    console.log(profileState)
+    
     try {
       const { data } = await update({
         variables: { ...formState }
@@ -88,7 +73,7 @@ const Profile = (props) => {
       console.error(e);
     }
     console.log(formState);
-
+    
 
     // clear form values
     setFormState({
@@ -97,6 +82,7 @@ const Profile = (props) => {
       url: "",
       userId: myId
     });
+    setUserData(data);
   };
   
   
@@ -119,33 +105,33 @@ const Profile = (props) => {
             </button>
           </div>
           <div className="">
-            <p className="my-0 fw-bold fs-5">{profileState.name}</p>
-            <p className="my-0 text-secondary option">@{profileState.username}</p>
+            <p className="my-0 fw-bold fs-5">{data.user.name}</p>
+            <p className="my-0 text-secondary option">@{data.user.username}</p>
           </div>
           <div className="my-3">
-            <p className="my-0">{profileState.description}</p>
+            <p className="my-0">{data.user.description}</p>
           </div>
           <div className="mb-3">
             <a
               className="my-0 text-decoration-none option"
-              href={profileState.url}>
-              {profileState.url}
+              href={data.user.url}>
+              {data.user.url}
             </a>
           </div>
           <div className="d-flex mb-3">
             <p className="my-0 me-3">
-              <span className="option fw-semibold">{profileState.followingCount}</span>{" "}
+              <span className="option fw-semibold">{data.user.followingCount}</span>{" "}
               Following
             </p>
             <p className="my-0">
-              <span className="option fw-semibold">{profileState.followerCount}</span>{" "}
+              <span className="option fw-semibold">{data.user.followerCount}</span>{" "}
               Followers
             </p>
           </div>
         </div>
       </div>
       <SingleTweet
-        tweets={profileState.tweets}
+        tweets={data.user.tweets}
         show={show}
         handleShow={handleShow}
         modalType={modalType}
@@ -167,7 +153,7 @@ const Profile = (props) => {
             </div>
             <div className="col-10">
               <div>
-                <form onSubmit={handleFormSubmit}>
+                <form onSubmit={() =>{handleFormSubmit();setUserData()}}>
                   <input
                     className="rounded-pill form-input form-control mb-3"
                     placeholder="Display name..."
@@ -215,6 +201,7 @@ const Profile = (props) => {
             onClick={() => {
               handleShowEdit();
               handleFormSubmit();
+              setUserData()
             }}>
             Save
           </Button>

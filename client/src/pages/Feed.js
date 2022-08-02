@@ -10,6 +10,8 @@ import Lists from "../components/Lists";
 import Profile from "../components/Profile";
 import Settings from "../components/Settings";
 
+import {useQuery} from '@apollo/client';
+import {QUERY_ONE_USER} from "../utils/queries";
 import Auth from "../utils/auth";
 
 function Feed() {
@@ -32,6 +34,13 @@ function Feed() {
       setShow(false);
     }
   };
+  const myUsername = Auth.getProfile().data.username;
+  const {data} = useQuery(QUERY_ONE_USER, {
+    variables: {username: myUsername}
+  });
+  console.log(data)
+  // const {user} = data;
+  // console.log(user);
   return (
     <main>
       {loggedIn ? (
@@ -62,7 +71,9 @@ function Feed() {
             handleShow={handleShow}
             modalType={modalType} 
             modalIsReply={modalIsReply} 
-            modalIsTweet={modalIsTweet} />}
+            modalIsTweet={modalIsTweet} 
+            data={data}
+            />}
             {currentTab === 8 && <Settings />}
           </div>
           <div className="col-4"></div>
