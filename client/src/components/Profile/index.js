@@ -1,9 +1,11 @@
-import React from "react";
+import React, { useState } from "react";
+import { Modal, Form, Button } from "react-bootstrap";
 // import { Navigate, useParams} from "react-router-dom"
-import { useQuery } from "@apollo/client";
+import { useQuery, useMutation } from "@apollo/client";
 import Auth from "../../utils/auth";
 
-import { QUERY_ONE_USER} from "../../utils/queries";
+import { QUERY_ONE_USER } from "../../utils/queries";
+import { UPDATE_USER_PROFILE } from "../../utils/mutations";
 
 import defaultPFP from "../../assets/images/default-pfp.jpg";
 import SingleTweet from '../SingleTweet';
@@ -11,12 +13,61 @@ import SingleTweet from '../SingleTweet';
 const Profile = (tab) => {
   // const dummyName = "CedrickSporer.Reynolds93"
   const myUsername = Auth.getProfile().data.username;
+  const myId = Auth.getProfile().data._id;
   const { data } = useQuery(QUERY_ONE_USER, {
     variables: { username: myUsername },
   });
 
   const user = data?.user || {};
+
+  const [update, { error }] = useMutation(UPDATE_USER_PROFILE);
+
+  const [formState, setFormState] = useState({
+    display_name: "",
+    description: "",
+    url: "",
+  });
+
+  const handleChange = (event) => {
+    const { name, value } = event.target;
+
+    setFormState({
+      ...formState,
+      [name]: value,
+    });
+  };
+
+  const [show, setShow] = useState(false);
+  const handleShow = () => {
+    if (show === false) {
+      setShow(true);
+      console.log("show");
+    } else {
+      setShow(false);
+      console.log("not show");
+    }
+  };
   
+  const handleFormSubmit = async (event) => {
+
+    try {
+      const { data } = await update({
+        variables: { ...formState },
+        userId: myId
+      });
+    } catch (e) {
+      console.error(e);
+    }
+
+    console.log(data);
+
+    // clear form values
+    setFormState({
+      display_name: "",
+      description: "",
+      url: "",
+    });
+  };
 
   return (
     <>
@@ -31,7 +82,10 @@ const Profile = (tab) => {
               className="rounded-circle img-fluid h-50"
               alt="default avatar"
             ></img>
-            <button className="rounded-pill btn btn-md text-light fw-bold primary">
+            <button
+              onClick={() => handleShow()}
+              className="rounded-pill btn btn-md text-light fw-bold primary"
+            >
               Edit Profile
             </button>
           </div>
@@ -43,15 +97,95 @@ const Profile = (tab) => {
             <p className="my-0">{user.description}</p>
           </div>
           <div className="mb-3">
-            <a className="my-0 text-info text-decoration-none option" href={user.url }>{user.url}</a>
+            <a
+              className="my-0 text-info text-decoration-none option"
+              href={user.url}
+            >
+              {user.url}
+            </a>
           </div>
           <div className="d-flex mb-3">
-            <p className="my-0 me-3"><span className="option fw-semibold">{user.followingCount}</span> Following</p>
-            <p className="my-0"><span className="option fw-semibold">{user.followerCount}</span> Followers</p>
+            <p className="my-0 me-3">
+              <span className="option fw-semibold">{user.followingCount}</span>{" "}
+              Following
+            </p>
+            <p className="my-0">
+              <span className="option fw-semibold">{user.followerCount}</span>{" "}
+              Followers
+            </p>
           </div>
         </div>
       </div>
       <SingleTweet tweets={user.tweets} />
+      <Modal show={show} onHide={() => handleShow()}>
+        <Modal.Header className="bg-light" closeButton>
+          <Modal.Title>Profile Edit</Modal.Title>
+        </Modal.Header>
+        <Modal.Body className="bg-light">
+          <div className="row mx-2">
+            <div className="col-2">
+              <img
+                src={defaultPFP}
+                className="rounded-circle img-fluid"
+                alt="default avatar"
+              ></img>
+            </div>
+            <div className="col-10">
+              <div>
+                <form onSubmit={handleFormSubmit}>
+                  <input
+                    className="rounded-pill form-input form-control mb-3"
+                    placeholder="Display name..."
+                    name="display_name"
+                    type="display_name"
+                    id="display_name"
+                    value={formState.display_name}
+                    onChange={handleChange}
+                  />
+                  <textarea
+                    className="rounded form-input form-control mb-3"
+                    placeholder="Description..."
+                    name="description"
+                    type="description"
+                    id="description"
+                    value={formState.description}
+                    onChange={handleChange}>
+                  </textarea>
+                  <input
+                    className="rounded-pill form-input form-control "
+                    placeholder="Site"
+                    name="url"
+                    type="url"
+                    id="url"
+                    value={formState.url}
+                    onChange={handleChange}/>
+                </form>
+              </div>
+            </div>
+          </div>
+        </Modal.Body>
+        <Modal.Footer className="d-flex bg-light">
+          <div className="d-flex flex-row align-items-center justify-content-between pl-3">
+            <div className="fs-4">
+              <i className="bi bi-image mx-1 option"></i>
+              <i className="bi bi-filetype-gif mx-1 option"></i>
+              <i className="bi bi-clipboard-data mx-1 option"></i>
+              <i className="bi bi-emoji-kiss mx-1 option"></i>
+              <i className="bi bi-calendar mx-1 option"></i>
+              <i className="bi bi-geo-alt mx-1 option"></i>
+            </div>
+          </div>
+          <Button
+            className="my-2 w-25 border-0 rounded-pill btn text-light fw-bold primary btn-md"
+            onClick={() => {
+              handleShow();
+              handleFormSubmit();
+            }}
+          >
+            Save
+          </Button>
+        </Modal.Footer>
+      </Modal>
     </>
   );
 };

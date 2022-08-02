@@ -68,6 +68,17 @@ export const FOLLOW_USER = gql`
   }
 `;
 
+export const UPDATE_USER_PROFILE = gql`
+  mutation UpdateUser($name: String, $userId: ID!
+    $description: String, $url: String) {
+    updateUser(name: $name, userId: $userId, description: $description, url: $url) {
+      name
+      description
+      url
+    }
+  }
+`;
+
 export const LIKE_TWEET = gql`
   mutation LikeTweet($userId: String!, $tweetId: String!) {
     likeTweet(userId: $userId, tweetId: $tweetId) {
