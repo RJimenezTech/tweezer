@@ -1,7 +1,5 @@
 import React, {useState} from 'react';
-import Modal from 'react-bootstrap/Modal';
-import Button from 'react-bootstrap/Button';
-import Form from 'react-bootstrap/Form';
+import {Modal, Button, Form} from 'react-bootstrap';
 
 import Auth from "../../utils/auth";
 import {useMutation} from '@apollo/client';
@@ -120,7 +118,7 @@ function Nav(props) {
       
       <Modal show={show} onHide={()=>handleShow()}>
         <Modal.Header closeButton>
-            <Modal.Title>Create Tweet</Modal.Title>
+            <Modal.Title>Tweet</Modal.Title>
         </Modal.Header>
         <Form onSubmit={handleFormSubmit}>
             <Modal.Body>
