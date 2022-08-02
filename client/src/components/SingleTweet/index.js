@@ -16,7 +16,6 @@ function SingleTweet(props) {
     {
       variables: {username: myUsername}
     });
-  console.log(data)
   const [likeTweet] = useMutation(LIKE_TWEET);
 
   // const handleLikeColor = (tweetId) => {
