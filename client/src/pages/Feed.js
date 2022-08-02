@@ -20,15 +20,39 @@ function Feed() {
     setCurrentTab(currentTab);
   };
 
+  const [modalType, setModalType] = useState("");
+  const modalIsReply = () => setModalType("reply");
+  const modalIsTweet = () => setModalType("tweet");
+  // modal logic
+  const [show, setShow] = useState(false);
+  const handleShow = () => {
+    if (show === false) {
+      setShow(true)
+    } else {
+      setShow(false);
+    }
+  };
   return (
     <main>
       {loggedIn ? (
         <div className="row bg-light w-100 min-vh-100">
           <div className="col-4 d-flex justify-content-end text-dark">
-            <Nav passData={passData}></Nav>
+            <Nav 
+            passData={passData} 
+            show={show}
+            handleShow={handleShow}
+            modalType={modalType} 
+            modalisReply={modalIsReply} 
+            modalIsTweet={modalIsTweet}></Nav>
           </div>
           <div className="col-4 border center-feed">
-            {currentTab === 1 && <HomeTweet />}
+            {currentTab === 1 && <HomeTweet 
+            passData={passData} 
+            show={show}
+            handleShow={handleShow}
+            modalType={modalType} 
+            modalIsReply={modalIsReply} 
+            modalIsTweet={modalIsTweet}/>}
             {currentTab === 2 && <Explore />}
             {currentTab === 3 && <Notifications />}
             {currentTab === 4 && <Messages />}

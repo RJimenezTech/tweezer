@@ -1,12 +1,15 @@
-import React from "react";
+import React, {useState} from "react";
 import SingleTweet from "../SingleTweet"
 
 import { useQuery } from "@apollo/client";
 import { QUERY_ALL_TWEETS } from "../../utils/queries";
+import TweetModal from '../TweetModal';
 
 import defaultPFP from "../../assets/images/default-pfp.jpg";
 
-function HomeTweet(tab) {
+function HomeTweet(props) {
+  const {modalType, modalIsTweet, modalIsReply, show, handleShow} = props;
+  const [thisTweetId, setTweetId] = useState("");
   const { data } = useQuery(QUERY_ALL_TWEETS);
   // const { data: userData } = useQuery(QUERY_ME_BASIC);
   const tweets = data?.tweets || [];
@@ -41,13 +44,14 @@ function HomeTweet(tab) {
               <i className="bi bi-calendar mx-1 option"></i>
               <i className="bi bi-geo-alt mx-1 option"></i>
             </div>
-            <button className="my-4 w-25 rounded-pill btn text-light fw-bold primary btn-md">
+            <button onClick={()=>{modalIsTweet();handleShow()}}className="my-4 w-25 rounded-pill btn text-light fw-bold primary btn-md">
               Tweet
             </button>
           </div>
         </div>
       </div>
-      <SingleTweet tweets={tweets} />
+      <SingleTweet tweets={tweets} show={show} handleShow={handleShow} modalType={modalType} modalIsReply={modalIsReply} setTweetId={setTweetId} thisTweetId={thisTweetId}/>
+      <TweetModal show={show} handleShow={handleShow} modalType={modalType} modalIsTweet={modalIsTweet} thisTweetId={thisTweetId}/>
     </>
     );
 }
