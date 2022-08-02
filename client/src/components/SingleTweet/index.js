@@ -18,19 +18,20 @@ function SingleTweet(props) {
   //   }
   // };
 
-  const handleLikeColor = () => {
-    if (like === false) {
-      setLike(true);
-    } else {
-      setLike(false);
-    }
-  }
+  // const handleLikeColor = (tweetId) => {
+  //   const isLiked = myLikes.map((tweet) => tweet._id).includes(tweetId)
+    
+  //   if (isLiked) {
+  //     return true;
+  //   } else return false;
+  // }
+
   const handleLike = async (event) => {
     try {
       await likeTweet({
         variables: {userId: myUserId, tweetId: thisTweetId}
       })
-      handleLikeColor();
+      // handleLikeColor();
     } catch (e) {
       console.error(e);
     }
@@ -78,9 +79,9 @@ function SingleTweet(props) {
                 <div className="d-flex text-secondary justify-content-around py-2 fs-4 border-bottom">
                   <i className="bi bi-reply mx-1 option" onClick={()=>{handleShow();setTweetId(tweet._id);modalIsReply()}}></i>
                   <i className="bi bi-arrow-repeat mx-1 option"></i>
-                  {like ? <i className="bi bi-heart-fill mx-1 option" onClick={()=>{handleLike()}}></i> 
-                  : <i className="bi bi-heart mx-1 option" onClick={()=>{handleLike()}}></i>}
-                  
+                  {/*handleLikeColor(tweet._id) ? <i className="bi bi-heart-fill mx-1 option" onClick={()=>{handleLike();setTweetId(tweet._id)}}></i> 
+                  : <i className="bi bi-heart mx-1 option" onClick={()=>{handleLike();setTweetId(tweet._id)}}></i>*/}
+                  <i className="bi bi-heart mx-1 option"></i>
                   <i className="bi bi-share mx-1 option"></i>
                 </div>
               </div>

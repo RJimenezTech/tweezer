@@ -104,6 +104,7 @@ export const QUERY_ONE_USER = gql`
         likesCount
       }
       likes {
+        _id
         likesCount
       }
       following {

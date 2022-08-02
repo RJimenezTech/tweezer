@@ -11,7 +11,7 @@ import SingleTweet from '../SingleTweet';
 const Profile = (tab) => {
   // const dummyName = "CedrickSporer.Reynolds93"
   const myUsername = Auth.getProfile().data.username;
-  const { data, error } = useQuery(QUERY_ONE_USER, {
+  const { data } = useQuery(QUERY_ONE_USER, {
     variables: { username: myUsername },
   });
 
