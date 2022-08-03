@@ -36,7 +36,7 @@
     height: auto;
 }
 
-.home-header:not(.header-text) {
+.home-header {
     position: sticky !important;
     top: 0 !important;
     z-index: 999 !important;

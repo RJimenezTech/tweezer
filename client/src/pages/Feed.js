@@ -45,7 +45,7 @@ function Feed() {
     <main>
       {loggedIn ? (
         <div className="row bg-light w-100 min-vh-100">
-          <div className="col-4 d-flex justify-content-end text-dark">
+          <div className="col-lg-4 col-12 order-2 order-lg-1 d-flex justify-content-center justify-content-lg-end text-dark">
             <Nav 
             passData={passData} 
             show={show}
@@ -54,7 +54,7 @@ function Feed() {
             modalisReply={modalIsReply} 
             modalIsTweet={modalIsTweet}></Nav>
           </div>
-          <div className="col-4 border center-feed">
+          <div className="col-lg-4 col-12 order-1 order-lg-2 border center-feed">
             {currentTab === 1 && <HomeTweet 
             show={show}
             handleShow={handleShow}
@@ -76,7 +76,7 @@ function Feed() {
             />}
             {currentTab === 8 && <Settings />}
           </div>
-          <div className="col-4"></div>
+          <div className="col-lg-4 d-none"></div>
         </div>
       ) : (
         <div>
