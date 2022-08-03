@@ -34,11 +34,11 @@ function Feed() {
       setShow(false);
     }
   };
-  const myUsername = Auth.getProfile().data.username;
-  const {data} = useQuery(QUERY_ONE_USER, {
-    variables: {username: myUsername}
-  });
-  console.log(data)
+  // const myUsername = Auth.getProfile().data.username;
+  // const {data} = useQuery(QUERY_ONE_USER, {
+  //   variables: {username: myUsername}
+  // });
+  // console.log(data)
   // const {user} = data;
   // console.log(user);
   return (
@@ -72,7 +72,7 @@ function Feed() {
             modalType={modalType} 
             modalIsReply={modalIsReply} 
             modalIsTweet={modalIsTweet} 
-            data={data}
+            // data={data}
             />}
             {currentTab === 8 && <Settings />}
           </div>

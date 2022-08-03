@@ -3,14 +3,20 @@ import { Modal, Button } from "react-bootstrap";
 import { useQuery, useMutation } from "@apollo/client";
 import Auth from "../../utils/auth";
 
-import { QUERY_ONE_USER } from "../../utils/queries";
+import { QUERY_ONE_USER, QUERY_ME_ALL, QUERY_ALL_TWEETS } from "../../utils/queries";
 import { UPDATE_USER_PROFILE } from "../../utils/mutations";
 
 import defaultPFP from "../../assets/images/default-pfp.jpg";
 import SingleTweet from '../SingleTweet';
 
 const Profile = (props) => {
-  const {modalType, modalIsReply, show, handleShow, data} = props;
+  const myUsername = Auth.getProfile().data.username;
+  const {data, refetch} = useQuery(QUERY_ONE_USER, {
+    variables: {username: myUsername}
+  });
+  console.log(data)
+
+  const {modalType, modalIsReply, show, handleShow} = props;
   const {user} = data;
   console.log(user);
   console.log(user.tweets);
@@ -20,7 +26,28 @@ const Profile = (props) => {
   
   const [userData, setUserData] = useState(data);
 
-  const [update, { error }] = useMutation(UPDATE_USER_PROFILE);
+  const [updateUser, { error }] = useMutation(UPDATE_USER_PROFILE
+  //   , {
+  //   update(cache, { data: {updateUser}}) {
+
+  //     try {
+  //       const {me} = cache.readQuery({query: QUERY_ME_ALL});
+  //       cache.writeQuery({
+  //         query: QUERY_ME_ALL,
+  //         data: {me: {...me, tweets: [...me.tweets, updateUser]}},
+  //       });
+  //     } catch (e) {
+  //       console.warn("User updated!")
+  //     }
+  //     const {data} = cache.readQuery({query:QUERY_ME_ALL});
+  //     console.log(cache.readQuery({query:QUERY_ME_ALL}));
+  //     // cache.writeQuery({
+  //     //   query: QUERY_ALL_TWEETS, 
+  //     //   data: {tweets: [updateUser, ...tweets]},
+  //     // });
+  //   } 
+  // }
+  );
 
   
 
@@ -66,11 +93,11 @@ const Profile = (props) => {
   
   const handleFormSubmit = async () => {
 
-    
     try {
-      const { data } = await update({
+      const { data } = await updateUser({
         variables: { ...formState }
       });
+      refetch({username: myUsername});
     } catch (e) {
       console.error(e);
     }

@@ -7,7 +7,7 @@ import { QUERY_ONE_USER} from '../../utils/queries';
 import defaultPFP from "../../assets/images/default-pfp.jpg";
 
 function SingleTweet(props) {
-  const {thisTweetId, tweets, setTweetId, modalIsReply, handleShow} = props;
+  const {thisTweetId, tweets, setTweetId, modalIsReply, handleShow, refetch} = props;
   const myUserId = Auth.getProfile().data._id;
   const myUsername = Auth.getProfile().data.username;
   const [like, setLike] = useState(false)

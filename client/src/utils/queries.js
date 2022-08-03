@@ -120,59 +120,59 @@ export const QUERY_ONE_USER = gql`
 // I tried to query as much as possible here. 
 // There is a slightly shorter QUERY_ME_BASIC below 
 export const QUERY_ME_ALL = gql`
-query Me {
-  me {
-    _id
-    name
-    username
-    email
-    description
-    url
-    isPublic
-    notifications {
-      _id
-      text
-    }
-    tweets {
-      _id
-      text
-      userId
-    }
-    followers {
-      followerCount
-      followers {
-        _id
-        name
-        username
-      }
-    }
-    following {
+  {
+    me {
       _id
       name
       username
-      followingCount
+      email
+      description
+      url
+      isPublic
+      notifications {
+        _id
+        text
+      }
+      tweets {
+        _id
+        text
+        userId
+      }
+      followers {
+        followerCount
+        followers {
+          _id
+          name
+          username
+        }
+      }
       following {
         _id
         name
         username
+        followingCount
+        following {
+          _id
+          name
+          username
+        }
       }
+      likes {
+        _id
+        text
+        userId
+      }
+      notificationCount
+      tweetCount
+      followerCount
+      followingCount
     }
-    likes {
-      _id
-      text
-      userId
-    }
-    notificationCount
-    tweetCount
-    followerCount
-    followingCount
   }
-}
 `;
 
 
 export const QUERY_ME_BASIC = gql`
-  query User {
+  { 
     me {
       _id
       name
