@@ -59,3 +59,11 @@
     outline: 0px none !important;
     
 }
+
+@media (max-width: 576px) {
+    .nav-mobi {
+        position: absolute !important;
+        bottom: 0 !important;
+        z-index: 999 !important;
+    }
+}
