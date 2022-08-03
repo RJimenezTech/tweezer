@@ -44,7 +44,7 @@ function Feed() {
   return (
     <main>
       {loggedIn ? (
-        <div className="row bg-light w-100 min-vh-100">
+        <div className="row bg-light min-vh-100">
           <div className="col-lg-4 col-12 order-2 order-lg-1 d-flex justify-content-center justify-content-lg-end text-dark">
             <Nav 
             passData={passData} 

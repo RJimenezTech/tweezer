@@ -52,8 +52,8 @@ function Nav(props) {
         <button onClick={()=>{handleShow();modalIsTweet()}} className="my-4 w-100 d-none d-lg-inline rounded-pill btn text-light fw-bold primary btn-lg">
           Tweet
         </button>
-        <button onClick={()=>{handleShow();modalIsTweet()}} className="my-3 mx-2 d-lg-none rounded-circle btn text-light primary">
-          <i class="bi bi-plus-lg"></i>
+        <button onClick={()=>{handleShow();modalIsTweet()}} className="my-3 mx-2 d-lg-none rounded-pill btn text-light fw-bold primary">
+          Tweet
         </button>
       </div>
       <TweetModal tweetId={tweetId} show={show} modalType={modalType} handleShow={handleShow}/>
