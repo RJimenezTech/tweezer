@@ -22,6 +22,8 @@ const Profile = (props) => {
 
   const [update, { error }] = useMutation(UPDATE_USER_PROFILE);
 
+  
+
   const [showEdit, setShowEdit] = useState(false);
   const handleShowEdit = () => {
     if (showEdit === false) {

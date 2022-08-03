@@ -6,6 +6,7 @@ import Form from 'react-bootstrap/Form';
 import Auth from "../../utils/auth";
 import {useMutation} from '@apollo/client';
 import {REPLY_TWEET, ADD_TWEET} from '../../utils/mutations';
+import {QUERY_ALL_TWEETS, QUERY_ME_BASIC} from '../../utils/queries';
 import defaultPFP from "../../assets/images/default-pfp.jpg";
 
 
@@ -14,11 +15,27 @@ function TweetModal(props) {
     const myUsername = Auth.getProfile().data.username;
     const { thisTweetId, show, handleShow, modalType} = props;
     const [text, setFormState] = useState("");
-    const [addTweet] = useMutation(ADD_TWEET
-    //   ,{
-    //     variables: {userId: myUserId, text: text}
-    // }
+    const [addTweet] = useMutation(ADD_TWEET,{
+        update(cache, { data: {addTweet}}) {
+
+          try {
+            const {me} = cache.readQuery({query: QUERY_ME_BASIC});
+            cache.writeQuery({
+              query: QUERY_ME_BASIC,
+              data: {me: {...me, tweets: [...me.tweets, addTweet]}},
+            });
+          } catch (e) {
+            console.warn("Tweeted!")
+          }
+          const {tweets} = cache.readQuery({query:QUERY_ALL_TWEETS});
+          cache.writeQuery({
+            query: QUERY_ALL_TWEETS, 
+            data: {tweets: [addTweet, ...tweets]},
+          });
+        } 
+      }
     );
+
     const [reply] = useMutation(REPLY_TWEET
     //   , {
     //     variables: {userId: myUserId, text: text, tweetId: thisTweetId}
