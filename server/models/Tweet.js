@@ -28,6 +28,9 @@ const tweetSchema = new Schema(
       type: String, 
       required: true,
     },
+    name: {
+      type: String,
+    },
     replies: [
       {
         type: Schema.Types.ObjectId,

@@ -11,6 +11,7 @@ function HomeTweet(props) {
   const {modalType, modalIsTweet, modalIsReply, show, handleShow} = props;
   const [thisTweetId, setTweetId] = useState("");
   const { data } = useQuery(QUERY_ALL_TWEETS);
+  console.log(data);
   // const { data: userData } = useQuery(QUERY_ME_BASIC);
   const tweets = data?.tweets || [];
   return (

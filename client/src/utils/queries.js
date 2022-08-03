@@ -9,6 +9,7 @@ export const QUERY_ALL_TWEETS = gql`
       text
       userId
       username
+      name
       retweetCount
       likesCount
       replyCount
@@ -40,6 +41,8 @@ export const QUERY_ONE_TWEET = gql`
       text
       createdAt
       userId
+      username
+      name
       replies {
         _id
         text

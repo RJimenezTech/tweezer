@@ -78,7 +78,8 @@ db.once("open", async () => {
     const randomUser = await User.findById(userId);
     const username = randomUser.username;
     console.log(username);
-    const createdTweet = await Tweet.create({ text, userId, username });
+    const name = randomUser.name;
+    const createdTweet = await Tweet.create({ text, userId, username, name });
     console.log(createdTweet);
     const updatedUser = await User.updateOne(
       { _id: userId },

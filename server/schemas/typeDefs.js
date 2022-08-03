@@ -25,6 +25,7 @@ const typeDefs = gql`
     text: String
     createdAt: String
     userId: String
+    name: String
     username: String
     replies: [Tweet]
     likes: [User]

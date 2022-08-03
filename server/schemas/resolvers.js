@@ -81,6 +81,7 @@ const resolvers = {
           text: text,
           userId: userId,
           username: user.username,
+          name: user.name
         });
         
         await User.findByIdAndUpdate(
@@ -194,6 +195,7 @@ const resolvers = {
           text: text,
           userId: userId,
           username: user.username,
+          name: user.name,
           isReply: true
         });
 

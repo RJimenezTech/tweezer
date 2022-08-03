@@ -26,30 +26,7 @@ const Profile = (props) => {
   
   const [userData, setUserData] = useState(data);
 
-  const [updateUser, { error }] = useMutation(UPDATE_USER_PROFILE
-  //   , {
-  //   update(cache, { data: {updateUser}}) {
-
-  //     try {
-  //       const {me} = cache.readQuery({query: QUERY_ME_ALL});
-  //       cache.writeQuery({
-  //         query: QUERY_ME_ALL,
-  //         data: {me: {...me, tweets: [...me.tweets, updateUser]}},
-  //       });
-  //     } catch (e) {
-  //       console.warn("User updated!")
-  //     }
-  //     const {data} = cache.readQuery({query:QUERY_ME_ALL});
-  //     console.log(cache.readQuery({query:QUERY_ME_ALL}));
-  //     // cache.writeQuery({
-  //     //   query: QUERY_ALL_TWEETS, 
-  //     //   data: {tweets: [updateUser, ...tweets]},
-  //     // });
-  //   } 
-  // }
-  );
-
-  
+  const [updateUser, { error }] = useMutation(UPDATE_USER_PROFILE);
 
   const [showEdit, setShowEdit] = useState(false);
   const handleShowEdit = () => {
