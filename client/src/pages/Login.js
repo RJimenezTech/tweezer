@@ -48,7 +48,7 @@ function Login() {
 
   return (
     <>
-      <div className="row min-vh-100 bg-light">
+      <div className="row min-vh-100 bg-light w-100">
         <div className="col-lg-4 col-12 order-1 order-lg-1 bg-img"></div>
         <div className="col-lg-8 col-12 order-2 order-lg-2">
           <div className="h-100 d-flex flex-column align-items-center justify-content-center p-0">
@@ -85,9 +85,9 @@ function Login() {
               </a>
               !
             </p>
+        {error && <div>Login failed</div>}
           </div>
         </div>
-        {error && <div>Login failed</div>}
       </div>
     </>
   );
