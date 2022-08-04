@@ -14,7 +14,8 @@ import Login from "./pages/Login";
 import Feed from "./pages/Feed";
 
 const httpLink = createHttpLink({
-  uri: "http://localhost:3001/graphql",
+  uri: '/graphql',
+  // uri: 'http://localhost:3001/graphql',
 });
 
 const authLink = setContext((_, { headers }) => {
