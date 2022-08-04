@@ -76,7 +76,7 @@ function SingleTweet(props) {
                   <p className="mx-2 my-0"><span className="option fw-semibold">{tweet.retweetCount}</span> Retweets</p>
                   <p className="mx-2 my-0"><span className="option fw-semibold">{tweet.likesCount}</span> Likes</p>
                 </div>
-                <div className="d-flex text-secondary justify-content-around py-2 fs-4 border-bottom">
+                <div className="d-flex text-secondary justify-content-around py-2 fs-4">
                   <i className="bi bi-reply mx-1 option" onClick={()=>{handleShow();setTweetId(tweet._id);modalIsReply()}}></i>
                   <i className="bi bi-arrow-repeat mx-1 option"></i>
                   {/*handleLikeColor(tweet._id) ? <i className="bi bi-heart-fill mx-1 active" onClick={()=>{handleLike();setTweetId(tweet._id)}}></i> 

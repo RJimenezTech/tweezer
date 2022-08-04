@@ -39,9 +39,9 @@ const Signup = () => {
   };
 
   return (
-    <div className="row w-100 min-vh-100 bg-light">
-      <div className="col-4 bg-img"></div>
-      <div className="col-8">
+    <div className="row min-vh-100 bg-light">
+      <div className="col-lg-4 col-12 order-1 order-lg-1 bg-img"></div>
+      <div className="col-lg-8 col-12 order-2 order-lg-2">
         <div className="h-100 d-flex flex-column align-items-center justify-content-center">
           <h1 className="mb-4 fw-bold">Welcome!</h1>
           <form onSubmit={handleFormSubmit}>
@@ -74,8 +74,7 @@ const Signup = () => {
             />
             <button
               className="rounded-pill my-4 btn text-light fw-bold primary btn-lg"
-              type="submit"
-            >
+              type="submit">
               Lets go!
             </button>
           </form>
