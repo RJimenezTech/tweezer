@@ -228,7 +228,7 @@ const resolvers = {
           {new: true}
         )
       }
-      if(args.url) {
+      if(args.description) {
         await User.findByIdAndUpdate(
           {_id: userId},
           {description: description},
@@ -242,7 +242,7 @@ const resolvers = {
           {new: true}
         )
       }
-      if(args.url) {
+      if(args.isPublic) {
         await User.findByIdAndUpdate(
           {_id: userId},
           {isPublic: isPublic},

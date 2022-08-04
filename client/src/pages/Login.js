@@ -47,48 +47,49 @@ function Login() {
   };
 
   return (
-    <div className="row w-100 min-vh-100 bg-light">
-      <div className="col-4 bg-img"></div>
-      <div className="col-8">
-        <div className="h-100 d-flex flex-column align-items-center justify-content-center">
-          <h1 className="mb-4 fw-bold">Welcome back, homie!</h1>
-          <form onSubmit={handleFormSubmit}>
-            <input
-              className="rounded-pill form-input form-control form-control-lg mb-3"
-              placeholder="Email"
-              name="email"
-              type="email"
-              id="email"
-              value={formState.email}
-              onChange={handleChange}
-            />
-            <input
-              className="rounded-pill form-input form-control form-control-lg"
-              placeholder="Password"
-              name="password"
-              type="password"
-              id="password"
-              value={formState.password}
-              onChange={handleChange}
-            />
-            <button
-              className="rounded-pill my-4 btn text-light fw-bold primary btn-lg"
-              type="submit"
-            >
-              Lets go!
-            </button>
-          </form>
-          <p className="fs-5 text-dark">
-            Don't have an account yet? Sign up{" "}
-            <a className="primary-link text-decoration-none" href="/signup">
-              here
-            </a>
-            !
-          </p>
+    <>
+      <div className="row min-vh-100 bg-light">
+        <div className="col-lg-4 col-12 order-1 order-lg-1 bg-img"></div>
+        <div className="col-lg-8 col-12 order-2 order-lg-2">
+          <div className="h-100 d-flex flex-column align-items-center justify-content-center p-0">
+            <h1 className="mb-4 fw-bold">Welcome back, homie!</h1>
+            <form onSubmit={handleFormSubmit}>
+              <input
+                className="rounded-pill form-input form-control form-control-lg mb-3"
+                placeholder="Email"
+                name="email"
+                type="email"
+                id="email"
+                value={formState.email}
+                onChange={handleChange}
+              />
+              <input
+                className="rounded-pill form-input form-control form-control-lg"
+                placeholder="Password"
+                name="password"
+                type="password"
+                id="password"
+                value={formState.password}
+                onChange={handleChange}
+              />
+              <button
+                className="rounded-pill my-4 btn text-light fw-bold primary btn-lg"
+                type="submit">
+                Lets go!
+              </button>
+            </form>
+            <p className="fs-5 text-dark">
+              Don't have an account yet? Sign up{" "}
+              <a className="primary-link text-decoration-none" href="/signup">
+                here
+              </a>
+              !
+            </p>
+          </div>
         </div>
+        {error && <div>Login failed</div>}
       </div>
-      {error && <div>Login failed</div>}
-    </div>
+    </>
   );
 }
 

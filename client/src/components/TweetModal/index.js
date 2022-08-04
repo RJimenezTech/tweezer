@@ -111,7 +111,7 @@ function TweetModal(props) {
                   <i className="bi bi-geo-alt mx-1 option"></i>
               </div>
             </div>
-            <Button className="my-2 w-25 rounded-pill btn text-light fw-bold primary btn-md"
+            <Button className="my-2 w-25 rounded-pill btn text-light fw-bold primary border-0 btn-md"
               onClick={()=> {handleShow();handleFormSubmit()}}
             >
             Tweet

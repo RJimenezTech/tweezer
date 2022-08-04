@@ -100,6 +100,7 @@ export const QUERY_ONE_USER = gql`
       tweets {
         _id
         text
+        name
         username
         createdAt
         replyCount

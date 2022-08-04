@@ -16,10 +16,10 @@ function HomeTweet(props) {
   const tweets = data?.tweets || [];
   return (
     <>
+      <header className="w-100 text-dark text-sm-center fs-5 fw-bold bg-light home-header">
+        <p className="p-3 header-text">Home</p>
+      </header>
       <div className="row mx-2 border-bottom">
-        <header className="text-dark fs-5 fw-bold bg-light home-header">
-          <p className="p-3 header-text">Home</p>
-        </header>
         <div className="col-2">
           <img
             src={defaultPFP}
