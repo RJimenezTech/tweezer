@@ -85,9 +85,9 @@ function Login() {
               </a>
               !
             </p>
+        {error && <div>Login failed</div>}
           </div>
         </div>
-        {error && <div>Login failed</div>}
       </div>
     </>
   );
